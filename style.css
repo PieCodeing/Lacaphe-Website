@@ -4,10 +4,17 @@ body {
     background-color: white;
     font-family: Arial, Helvetica, sans-serif;
 }
+.header {
+    background-image: url(./photo-bank/LACAPHEPIC1.JPG);
+    background-size: 80%;
+    background-attachment: scroll;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 .top {
     display: flex;
     justify-content: space-around;
-    background-color: #1f2937;
+    /* background-color: #1f2937; */
     width: auto;
     height: 400px;
     padding-top: 7%;
@@ -15,11 +22,16 @@ body {
 .nav-bar {
     list-style-type: none;
     display: flex;
+    align-items: center;
     gap: 30px;
+    padding: 0;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 50px;
 }
 .logo {
-    width: 80px;
-    height: 80px;
+    max-height: 45%;
+    aspect-ratio: 7/10;
 }
 .nav-bar, li {
     color: white;
@@ -39,6 +51,7 @@ body {
     transform: scale(0.9);
 }
 
+/* --------Footer Section------- */
 footer {
     background-color: #000;
     color: #fff;
@@ -46,7 +59,7 @@ footer {
     margin: 0;
 }
 
-.container {
+.footer-container {
     display: flex;
     align-items: center; 
     justify-content: space-between; 
@@ -85,7 +98,7 @@ footer {
     display: flex;
     height: 700px;
 }
-.container {
+.photo-container {
     flex-wrap: wrap;
     display: flex;
 }
