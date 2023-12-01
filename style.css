@@ -4,21 +4,27 @@ body {
     background-color: white;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 .header {
     background-image: url(./photo-bank/LACAPHEPIC1.JPG);
-    background-size: 80%;
+    background-size: 100% 100%;
+    background-size: contain;
     background-attachment: scroll;
     background-position: center;
     background-repeat: no-repeat;
 }
+
 .top {
     display: flex;
-    justify-content: space-around;
-    /* background-color: #1f2937; */
+    justify-content: space-between;
+    background-color: #1f2937;
     width: auto;
     height: 400px;
     padding-top: 7%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
+
 .nav-bar {
     list-style-type: none;
     display: flex;
@@ -29,11 +35,18 @@ body {
     margin-bottom: 0px;
     height: 50px;
 }
+
+.logo-container {
+    padding: 0;
+}
+
 .logo {
     max-height: 45%;
     aspect-ratio: 7/10;
 }
-.nav-bar, li {
+
+.nav-bar,
+li {
     color: white;
 }
 
@@ -44,7 +57,7 @@ body {
 
 .nav-bar-link p {
     margin: 0px;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
 }
 
 .nav-bar-link:hover p {
@@ -61,14 +74,16 @@ footer {
 
 .footer-container {
     display: flex;
-    align-items: center; 
-    justify-content: space-between; 
+    align-items: center;
+    justify-content: space-between;
 }
+
 .footer-right {
-    display: flex; 
+    display: flex;
     align-items: center;
     padding-right: 20px;
 }
+
 .footer-right img {
     width: 30px;
     height: 30px;
@@ -76,16 +91,15 @@ footer {
 
 .footer-right p {
     text-decoration: none;
-    color: white; 
+    color: white;
     padding-right: 10px;
 }
 
- /* ----------for quote section below----------- */
+/* ----------for quote section below----------- */
 .quote-section {
-    background-color: chocolate;
+    background-color: sandybrown;
     display: flex;
     width: auto;
-    height: 50px;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -93,56 +107,156 @@ footer {
     padding-top: 30px;
 }
 
-/* ----------- for Photo collection divs below ------------ */
-.photo-collection {
-    display: flex;
-    height: 700px;
+.quote-section>button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #1f2937;
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
 }
+
+.quote-section>button:hover {
+    transform: scale(0.9);
+}
+
+/* ----------- for Photo collection divs below ------------ */
+
 .photo-container {
     flex-wrap: wrap;
     display: flex;
 }
-/* dynamic photo sizing */
+
+
 .photo {
-    width: 30%;
+    width: 33%;
     object-fit: cover;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
     flex-grow: 1;
+
 }
 
 /* ----------Featured Drink Div below---------- */
-
 .featured-section {
-    width: auto;
-    height: 600px;
+    padding-top: 30px;
+    padding-bottom: 50px;
+    padding-left: 15%;
+    padding-right: 15%;
     background-color: sandybrown;
 }
-.title-div {
+
+.featured-row {
     display: flex;
-    padding-top: 30px;
+    /* flex-wrap: wrap; */
     justify-content: center;
 }
+
 .title {
     margin: 0;
+    padding-bottom: 20px;
     font-size: xxx-large;
+    display: flex;
+    justify-content: center;
 }
+
+.featured-section {
+    box-sizing: border-box;
+}
+
+.featured-section *,
+.featured-section *:before,
+.featured-section *:after {
+    box-sizing: inherit;
+}
+
+.card-img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.featured-column {
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+    transition: transform 0.3s ease;
+}
+
+.featured-column>a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.featured-column:hover {
+    transform: scale(0.9);
+}
+
+@media screen and (max-width: 650px) {
+    .featured-column {
+        width: 100%;
+        display: block;
+    }
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.562);
+}
+
+.card-text {
+    padding: 0 16px;
+}
+
+.card-text::after,
+.featured-row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 
 /*------------ Order Online Div below ---------------*/
 
 .order-online-section {
     width: auto;
-    height: 400px;
+    padding: 10rem;
     background-color: grey;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
+
+.oos-title-div>button {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #1f2937;
+    border: none;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.oos-title-div>button:hover {
+    transform: scale(0.9);
+}
+
 /* use padding to move around divs */
 .oos-title-div {
     width: 50%;
     padding-left: 100px;
 }
+
 .qr-code {
     width: 50%;
 }
