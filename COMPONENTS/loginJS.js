@@ -13,6 +13,14 @@ function handleSignIn() {
     const email = emailInput.value;
     const password = passwordInput.value;
     console.log('Email:', email, 'Password:', password);
+
+    if (!email.includes('@')) {
+        emailErrorElement.textContent = 'Please enter a valid email address';
+        return; // Stop execution if email is invalid
+    }
+
+    emailErrorElement.textContent = '';
+
     const userData = {
         email: email,
         password: password
