@@ -8,59 +8,40 @@ body {
 .top {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
-    background-color: #1f2937;
+    height: 400px;
     padding-top: 3%;
     padding-bottom: 20px;
+    background-color: #1f2937;
     background-image: url('../about_page_photos_lecaphe/AboutHeaderDSCF7769.jpg');
     background-size: 100% 100%;
 }
-.header{
-    background-image: url('LACAPHEPIC3.jpg'); /* Placeholder */
-    background-size:cover;
-    background-position-y: -600px;
-    background-repeat: no-repeat;
-    height: 500px;
-}
-/*.top {
-    display: flex;
-    justify-content: space-around;
-    width: auto;
-    height: 400px;
-    padding-top: 3%; /* I changed this to 3% cause I think 7% makes it too bulky up top
-}*/
 
-.header{
+.header {
     background-image: url('LACAPHEPIC3.jpg'); /* Placeholder */
-    background-size:cover;
+    background-size: cover;
     background-position-y: -600px;
     background-repeat: no-repeat;
     height: 500px;
-}
-.top {
-    display: flex;
-    justify-content: space-around;
-    width: auto;
-    height: 400px;
-    padding-top: 3%; /* I changed this to 3% cause I think 7% makes it too bulky up top*/
 }
 
 .nav-bar {
     list-style-type: none;
     display: flex;
     gap: 30px;
+    color: white;
 }
+
 .logo {
     width: 75px;
     height: 120px;
     margin: 0;
 }
-.nav-bar, li {
-    color: white;
-}
+
 .nav-bar li:last-child {
-    margin-top: -7px; 
+    margin-top: -7px;
 }
 
 .nav-bar-link {
@@ -70,13 +51,14 @@ body {
 
 .nav-bar-link p {
     margin: 0px;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .nav-bar-link:hover p {
     transform: scale(0.9);
 }
+
 .inside_header {
     position: absolute;
     top: 45%;
@@ -84,7 +66,6 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
     color: white;
-    margin-top: 0px;
 }
 
 .inside_header h1 {
@@ -94,53 +75,31 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.content-section {
+.content-section, .owners-section {
     display: flex;
     justify-content: space-between;
-
     align-items: center;
-    background-color: chocolate;
+    background-color: chocolate; /* For content-section */
+}
 
-    margin: 20px;
+.content-section div, .content-section img,
+.owners-section div, .owners-section img {
+    flex-basis: 49%;
+}
+
+.content-section p, .content-section h2,
+.owners-section p, .owners-section h2 {
     padding: 20px;
-    background-color: white;
 }
-.content-section div,
-.content-section img {
 
-    flex-basis: 48%;
-
-}
-.content-section img {
-    max-width: 100%;
-    height: auto;
-}
-.owners-section {
-    display: flex;
-    justify-content: space-between;
-
-    align-items: center;
-    background-color: sandybrown;
-
-    margin: 20px;
-    padding: 20px;
-    background-color: #e2e2e2;
-}
-.owners-section div,
-.owners-section img {
-    flex-basis: 48%;
-}
-.owners-section img {
-    max-width: 100%;
-    height: auto;
-}
 .gallery {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
 .gallery img {
-    flex-basis: 33.333%; /* Adjust this to change the number of columns */
+    flex-basis: 33.333%;
     max-width: 100%;
     height: auto;
 }
@@ -152,16 +111,12 @@ footer {
     margin: 0;
 }
 
-.container {
+.container, .footer-right {
     display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-}
-.footer-right {
-    display: flex; 
     align-items: center;
-    padding-right: 20px;
+    justify-content: space-between;
 }
+
 .footer-right img {
     width: 30px;
     height: 30px;
@@ -171,10 +126,10 @@ footer {
     margin-bottom: 20px;
     text-align: left;
     text-decoration: none;
-    color: white; 
+    color: white;
     padding-right: 10px;
-    font-family: Georgia, sans-serif; /* Change font-family */
-    line-height: 1.5; /* Increase line height */
+    font-family: Georgia, sans-serif;
+    line-height: 1.5;
 }
 
 .map-footer {
@@ -183,7 +138,22 @@ footer {
 }
 
 .content-section img, .owners-section img, .gallery img {
-    max-width: 100%; /* Keeps the image within its container */
-    height: auto; /* Maintains aspect ratio */
-    max-height: 400px; /* Example: limits the image height */
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+}
+
+.footer-nav-bar {
+    text-align: center;
+    background-color: #000;
+}
+
+.footer-nav-bar a, .footer-nav-bar a:visited {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer-nav-bar a:hover {
+    text-decoration: underline;
 }
