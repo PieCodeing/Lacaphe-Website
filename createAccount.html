@@ -4,7 +4,7 @@
     <title>Create Account</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Times New Roman', sans-serif;
             background-image: url('https://example.com/your-background-image.jpg'); /* Replace with your image URL */
             background-size: cover;
             background-position: center;
@@ -19,13 +19,16 @@
             overflow: hidden;
         }
         .top-nav a {
-            float: left;
+            float: right;
             display: block;
             color: white;
             text-align: center;
             padding: 14px 16px;
             text-decoration: none;
         }
+        .top-nav .home-link {
+    		float: left; /* Positions the Shop link on the left */
+		}
         .top-nav a:hover {
             background-color: #ddd;
             color: black;
@@ -77,11 +80,13 @@
 </head>
 <body>
     <div class="top-nav">
-        <a href="#home">HOME</a>
-        <a href="#about">ABOUT</a>
-        <a href="#drinks">DRINKS</a>
+    	
+    	<a href="https://www.instagram.com" target="_blank">INSTAGRAM LOGO</a>
         <a href="#connect">CONNECT</a>
-        <a href="https://www.instagram.com" target="_blank">INSTAGRAM</a>
+        <a href="#drinks">DRINKS</a>
+        <a href="#order">ORDER</a>
+        <a href="#about">ABOUT</a>
+         <a href="#home" class="home-link">LaCaphe image</a>
     </div>
 
     <div class="signup-form">
