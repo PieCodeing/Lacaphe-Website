@@ -1,23 +1,77 @@
+// const { createElement } = required('./COMPONENTS/elementCreator.js');
+
+async function handleFormSubmit(event, form, endpoint, method = 'POST', postSend) {
+    event.preventDefault();
+    // const form = document.getElementById(formId);
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch(endpoint, {
+            method: method,
+            body: formData
+        });
+
+        if (response.ok) {
+            console.log("submission successful");
+            postSend(response);
+        } else {
+            console.log("submission not successful");
+        }
+    } catch (error) {
+        console.error("Fetch error:", error);
+    }
+}
+
+
+
 async function fetchItems() {
+    let items = [];
     try {
         const response = await fetch('http://localhost:3000/drinks/all');
         const itemNames = await response.json();
 
         itemNames.forEach(menuItem => {
             const item = new Item(menuItem);
+            items.push(item);
         });
-    } catch(error){
+    } catch (error) {
         console.error("failed", error);
     }
+    return items;
+}
+
+async function getItemByID(id, actionUponReceivingItem) {
+    let encodedId = encodeURIComponent(id);
+    let url = '/drinks/list?id=' + encodedId;
+    let newItem = await fetch(url);
+    let newItemJson = await newItem.json();
+    newItemJson.forEach(item => {
+        actionUponReceivingItem(item);
+    });
 }
 
 class Item {
     _menuItem;
+    _drinkName;
     constructor(menuItem) {
         this._menuItem = menuItem;
         this._createHTMLItem();
     }
-    
+
+    async _refreshItem(displayName) {
+        // let encodedId = encodeURIComponent(this._menuItem.id);
+        // let url = '/drinks/list?id=' + encodedId;
+        // let newItem = await fetch(url);
+        // let newItemJson = await newItem.json();
+        // newItemJson.forEach(item => {
+        //     this._menuItem = item;
+        // })
+        getItemByID(this._menuItem.id, (item) => {
+            this._menuItem = item;
+            this._drinkName.textContent = this._menuItem.name + " (id:" + this._menuItem.id + ")";
+        });
+    }
+
     _createHTMLItem() {
         let drink = document.createElement('div');
         drink.className = 'drink';
@@ -25,127 +79,263 @@ class Item {
         collapsed.id = 'collapsed';
         let nameSide = document.createElement('div');
         nameSide.className = 'name-side';
-        nameSide.style.border = '5px solid red';
-        let drinkName = document.createElement('p');
-        drinkName.textContent = this._menuItem.name;
-        nameSide.appendChild(drinkName);
+        // nameSide.style.border = '5px solid red';
+        this._drinkName = document.createElement('p');
+        this._drinkName.textContent = this._menuItem.name + " (id:" + this._menuItem.id + ")";
+        nameSide.appendChild(this._drinkName);
         let btnSide = document.createElement('div');
         btnSide.className = 'btn-side';
-        btnSide.style.border = '5px solid red';
+        // btnSide.style.border = '5px solid red';
         let pencilBtn = document.createElement('img');
         pencilBtn.className = 'logo';
         pencilBtn.src = 'pencil-solid.svg';
+        pencilBtn.onclick = () => {
+            // let collapsedElement = document.getElementById('collapsed');
+            if (collapsed.nextElementSibling && collapsed.nextElementSibling.tagName === 'FORM') {
+                console.log("removing form");
+                collapsed.nextElementSibling.remove();
+            } else {
+                console.log("adding form");
+                // Creating the Edit Form
+                let editForm = document.createElement('form');
+                editForm.action = "/edit-drinks";
+                editForm.method = "POST";
+                editForm.enctype = "multipart/form-data";
+
+
+                // ID: [HIDDEN INPUT]
+                let hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'id';
+                hiddenInput.value = this._menuItem.id;
+                editForm.appendChild(hiddenInput);
+
+                // Drink Name
+                let labelForName = document.createElement('label');
+                labelForName.setAttribute('for', 'name');
+                labelForName.textContent = 'Drink Name:';
+                let inputName = document.createElement('input');
+                inputName.type = 'text';
+                inputName.id = 'name';
+                inputName.name = 'name';
+                inputName.value = this._menuItem.name;
+                inputName.required = true;
+                editForm.appendChild(labelForName);
+                editForm.appendChild(inputName);
+
+                // Price
+                let labelPrice = document.createElement('label');
+                labelPrice.setAttribute('for', 'price');
+                labelPrice.textContent = 'Price (eg. 5.00):';
+                let inputPrice = document.createElement('input');
+                inputPrice.type = 'text';
+                inputPrice.id = 'price';
+                inputPrice.name = 'price';
+                inputPrice.value = this._menuItem.price;
+                inputPrice.required = true;
+                editForm.appendChild(labelPrice);
+                editForm.appendChild(inputPrice);
+
+                // Description
+                let labelDescription = document.createElement('label');
+                labelDescription.setAttribute('for', 'description');
+                labelDescription.textContent = 'Description:';
+                let inputDescription = document.createElement('textarea');
+                // inputDescription.type = 'text';
+                inputDescription.id = 'edited-description';
+                inputDescription.name = 'description';
+                inputDescription.value = this._menuItem.description;
+                inputDescription.required = true;
+                editForm.appendChild(labelDescription);
+                editForm.appendChild(inputDescription);
+
+                // Image
+                /*
+                <label for="image">Image:</label>
+                <img src="[pull from server]" width='100px' height='200px'></img>
+                <input id="add-file" type="file" name="add-file" accept="image/*"> 
+                */
+                let labelEditImage = document.createElement('label');
+                labelEditImage.setAttribute('for', 'image');
+                labelEditImage.textContent = 'Old Image:';
+                editForm.appendChild(labelEditImage);
+
+                let oldImage = document.createElement('img');
+                oldImage.style.width = '100px';
+                oldImage.style.height = '200px';
+                oldImage.src = this._menuItem.image;
+                editForm.appendChild(oldImage);
+
+                let labelInputEditedImage = document.createElement('label');
+                labelInputEditedImage.textContent = "New Image:"
+                let inputEditedImage = document.createElement('input');
+                inputEditedImage.id = 'add-new-image';
+                inputEditedImage.type = 'file';
+                inputEditedImage.name = 'add-new-image';
+                inputEditedImage.accept = 'image/*';
+                editForm.appendChild(labelInputEditedImage);
+                editForm.appendChild(inputEditedImage);
+
+                // Drink dropdown
+                let labelEditDrinkType = document.createElement('label');
+                labelEditDrinkType.setAttribute('for', 'type');
+                labelEditDrinkType.textContent = "Drink Type:";
+                editForm.appendChild(labelEditDrinkType);
+
+
+                let editDrinkType = document.createElement('select');
+                editDrinkType.name = 'type'
+
+                let option1 = document.createElement('option');
+                option1.value = "s";
+                option1.text = "Signature Drink";
+                editDrinkType.appendChild(option1);
+
+                let option2 = document.createElement('option');
+                option2.value = "c";
+                option2.text = "Coffee";
+                editDrinkType.appendChild(option2);
+
+                let option3 = document.createElement('option');
+                option3.value = "t";
+                option3.text = "Tea";
+                editDrinkType.appendChild(option3);
+
+                let option4 = document.createElement('option');
+                option4.value = "i";
+                option4.text = "Ice Blended";
+                editDrinkType.appendChild(option4);
+
+                editDrinkType.value = this._menuItem.type;
+
+                editForm.appendChild(editDrinkType);
+
+
+                // Submit Button
+                let submitBtn = document.createElement('button');
+                submitBtn.type = 'submit';
+                submitBtn.style = "margin-top: 10px; margin-bottom: 10px;";
+                submitBtn.textContent = "Edit"
+                editForm.appendChild(submitBtn);
+
+                let self = this;
+                // editForm.addEventListener('submit', async (e) => {
+                //     e.preventDefault();
+                //     const formData = new FormData(editForm);
+
+                //     const response = await fetch('/edit-drinks', {
+                //         method: 'PUT',
+                //         body: formData,
+                //     });
+
+                //     if (response.ok) {
+                //         console.log('Upload successful');
+                //         editForm.remove();
+                //         self._refreshItem();
+                //     } else {
+                //         console.error('Upload failed');
+                //     }
+                // });
+                editForm.addEventListener('submit', (e) => handleFormSubmit(e, editForm, '/edit-drinks', 'PUT', () => {
+                    editForm.remove();
+                    self._refreshItem(self._drinkName);
+                }));
+
+                drink.appendChild(editForm);
+            }
+        }
+
+
         let garbageBin = document.createElement('img');
         garbageBin.className = 'logo';
         garbageBin.src = 'trash-solid.svg';
-
+        garbageBin.onclick = () => {
+            fetch(`http://localhost:3000/delete/${this._menuItem.id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to delete item");
+                }
+                return response.text();
+            })
+            .then(message => {
+                console.log(message);
+                drink.remove();
+            })
+            .catch(error => {
+                console.error("Error", error);
+            });
+        }
 
         drink.appendChild(collapsed);
         collapsed.append(nameSide, btnSide);
         btnSide.append(garbageBin, pencilBtn);
-    
+
         document.getElementById('menu-drinks').appendChild(drink);
     }
+
+
 }
 
-let items = [];
-
-// fetchItems();
 
 
+document.addEventListener('DOMContentLoaded', (event) => {
+    let addNewItemForm = document.getElementById("add-new-item");
+
+    // addNewItemForm.addEventListener('submit', async (e) => {
+    //     e.preventDefault();
+
+    //     const formData = new FormData(addNewItemForm);
+    //     const response = await fetch('/add-drink', {
+    //         method: 'POST',
+    //         body: formData,
+    //     });
+
+    //     // console.log(response);
+
+    //     if (response.ok) {
+    //         console.log("Upload successful");
+
+    //     } else {
+    //         console.log("Upload failed");
+    //     }
+    // });
+    addNewItemForm.addEventListener('submit', (e) => handleFormSubmit(e, addNewItemForm, '/add-drink', 'POST', async (response) => {
+        // let currentNumItems = (await items).length;
+        // let encodedId = encodeURIComponent(currentNumItems + 1);
+        // let url = '/drinks/list?id=' + encodedId;
+        // let newItem = await fetch(url);
+        // let newItemJson = await newItem.json();
+        // newItemJson.forEach(item => {
+
+        // });
+        // console.log(this._menuItem);
+        ////////////////////////////////////////
+        // getItemByID(currentNumItems + 1, (item) => {
+        //     const newItem = new Item(item);
+        // });
 
 
+        fetch('http://localhost:3000/get-latest')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed');
+                }
+                return response.json();
+            })
+            .then(item => {
+                console.log(item);
+                const newItem = new Item(item);
+            })
+            .catch(error => {
+                console.error("Error in fetching latest item");
+            });
 
 
+    }));
+});
+
+let items = fetchItems();
 
 
-
-
-
-
-
-
-
-// function updateSignatureDrinks(){
-//     var drinkName1 = document.getElementById("Drink1").value
-//     var drinkdesc1 = document.getElementById("desc1").value
-//     var drinkName2 = document.getElementById("Drink2").value
-//     var drinkdesc2 = document.getElementById("desc2").value
-//     var drinkName3 = document.getElementById("Drink3").value
-//     var drinkdesc3 = document.getElementById("desc3").value
-//     var drinkName4 = document.getElementById("Drink4").value
-//     var drinkdesc4 = document.getElementById("desc4").value
-//     var drinkName5 = document.getElementById("Drink5").value
-//    var drinkdesc5 = document.getElementById("desc5").value
-
-    
-//     document.getElementById("prevDrink1").innerHTML = drinkName1
-//     document.getElementById("prevdesc1").innerHTML = drinkdesc1
-//     document.getElementById("prevDrink2").innerHTML = drinkName2
-//     document.getElementById("prevdesc2").innerHTML = drinkdesc2
-//     document.getElementById("prevDrink3").innerHTML = drinkName3
-//     document.getElementById("prevdesc3").innerHTML = drinkdesc3
-//     document.getElementById("prevDrink4").innerHTML = drinkName4
-//     document.getElementById("prevdesc4").innerHTML = drinkdesc4
-//     document.getElementById("prevDrink5").innerHTML = drinkName5
-//     document.getElementById("prevdesc5").innerHTML = drinkdesc5
-    
-// }
-
-// function updateMenu(){
-//     var cn1 = document.getElementById("cn1").value
-//     var cd1 = document.getElementById("cd1").value
-//     var tm1 = document.getElementById("tm1").value
-//     var tmd1 = document.getElementById("tmd1").value
-//     var ib1 = document.getElementById("ib1").value
-//     var ibd1 = document.getElementById("ibd1").value
-
-//     var cn2 = document.getElementById("cn2").value
-//     var cd2 = document.getElementById("cd2").value
-//     var tm2 = document.getElementById("tm2").value
-//     var tmd2 = document.getElementById("tmd2").value
-//     var ib2 = document.getElementById("ib2").value
-//     var ibd2 = document.getElementById("ibd2").value
-
-//     var cn3 = document.getElementById("cn3").value
-//     var cd3 = document.getElementById("cd3").value
-//     var tm3 = document.getElementById("tm3").value
-//     var tmd3 = document.getElementById("tmd3").value
-//     var ib3 = document.getElementById("ib3").value
-//     var ibd3 = document.getElementById("ibd3").value
-
-//     var cn4 = document.getElementById("cn4").value
-//     var cd4 = document.getElementById("cd4").value
-//     var tm4 = document.getElementById("tm4").value
-//     var tmd4 = document.getElementById("tmd4").value
-//     var ib4 = document.getElementById("ib4").value
-//     var ibd4 = document.getElementById("ibd4").value
-
-//     document.getElementById("prevCn1").innerHTML = cn1
-//     document.getElementById("prevCd1").innerHTML = cd1
-//     document.getElementById("prevTmn1").innerHTML = tm1
-//     document.getElementById("prevTmd1").innerHTML = tmd1
-//     document.getElementById("prevIbn1").innerHTML = ib1
-//     document.getElementById("prevIbdesc1").innerHTML = ibd1
-
-//     document.getElementById("prevCn2").innerHTML = cn2
-//     document.getElementById("prevCd2").innerHTML = cd2
-//     document.getElementById("prevTmn2").innerHTML = tm2
-//     document.getElementById("prevTmd2").innerHTML = tmd2
-//     document.getElementById("prevIbn2").innerHTML = ib2
-//     document.getElementById("prevIbdesc2").innerHTML = ibd2
-
-//     document.getElementById("prevCn3").innerHTML = cn3
-//     document.getElementById("prevCd3").innerHTML = cd3
-//     document.getElementById("prevTmn3").innerHTML = tm3
-//     document.getElementById("prevTmd3").innerHTML = tmd3
-//     document.getElementById("prevIbn3").innerHTML = ib3
-//     document.getElementById("prevIbdesc3").innerHTML = ibd3
-
-//     document.getElementById("prevCn4").innerHTML = cn4
-//     document.getElementById("prevCd4").innerHTML = cd4
-//     document.getElementById("prevTmn4").innerHTML = tm4
-//     document.getElementById("prevTmd4").innerHTML = tmd4
-//     document.getElementById("prevIbn4").innerHTML = ib4
-//     document.getElementById("prevIbdesc4").innerHTML = ibd4
-// }

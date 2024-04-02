@@ -10,48 +10,52 @@
 </head>
 
 <body>
-    <div style="padding-left: 50px; padding-right: 50px;" class="rounded" id="add-drink">
-        <h1 style="margin-left: 100px; margin-right: 100px;">Add Menu Drink</h1>
-        <hr>
-        <table>
-            <tr>
-                <th width="200">Select Image</td>
-                <th width="200">Name</td>
-                <th width="200">Description</td>
-                <th width="200">Price</td>
-                <th width="200">Drink Type</th>
-            </tr>
-            <tr>
-                <td>
-                    <input type="file" id="add-file" name="add-file" accept="image/*">
-                </td>
-                <td>
-                    <input type="text" id="add-name" name="add-name">
-                </td>
-                <td>
-                    <textarea id="add-description" name="add-description" rows="1" cols="20"></textarea>
-                </td>
-                <td>
-                    <input type="text" id="add-price" name="add-price">
-                </td>
-                <td style="display: flex; flex-direction: column;">
-                    <input type="radio" id="add-type-signature" name="add-type-signature" value="add-type-signature">
-                    <label for="add-type-signature">Signature Drink</label>
-                    <input type="radio" id="add-type-coffee" name="add-type-coffee" value="add-type-coffee">
-                    <label for="add-type-coffee">Coffee</label>
-                    <input type="radio" id="add-type-tea" name="add-type-tea" value="add-type-tea">
-                    <label for="add-type-tea">Tea</label>
-                    <input type="radio" id="add-type-ice-blended" name="add-type-ice-blended" value="add-type-ice-blended">
-                    <label for="add-type-ice-blended">Ice Blended</label>
-                </td>
-            </tr>
-        </table>
+    <h1 style="margin-left: 100px; margin-right: 100px;">Add Menu Drink</h1>
+    <hr>
+    <div style="padding-left: 50px; padding-right: 50px; padding-top: 30px;" class="rounded" id="add-drink">
+        <form id="add-new-item" action="/add-drink" method="POST" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <th width="200">Select Image</td>
+                    <th width="200">Name</td>
+                    <th width="200">Description</td>
+                    <th width="200">Price</td>
+                    <th width="200">Drink Type</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="file" id="add-file" name="add-new-item-image" accept="image/*">
+                    </td>
+                    <td>
+                        <input type="text" id="add-name" name="add-new-item-name">
+                    </td>
+                    <td>
+                        <textarea id="add-description" name="add-new-item-description" rows="1" cols="20"></textarea>
+                    </td>
+                    <td>
+                        <input type="text" id="add-price" name="add-new-item-price">
+                    </td>
+                    <td style="display: flex; flex-direction: column;">
+                        <select id="add-new-item-type" name="add-new-item-type">
+                            <option value="s">Signature Drink</option>
+                            <option value="c">Coffee</option>
+                            <option value="t">Tea</option>
+                            <option value="i">Ice Blended</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" style="margin-top: 10px; margin-bottom: 10px;">Submit</button>
+        </form>
+
+        <!-- <button type="submit">Submit</button> -->
+
 
     </div>
     <h1>Current Menu Drinks</h1>
     <hr>
     <div id="menu-drinks">
-        <div class="drink">
+        <!-- <div class="drink">
             <div id="collapsed">
                 <div class="name-side" style="border: 5px solid red;">
                     <p>Test drink</p>
@@ -69,9 +73,8 @@
                 <label for="description">Description:</label>
                 <input type="text" id="description" name="description" value="description lol" required>
                 <button type="submit" style="margin-top: 10px; margin-bottom: 10px;">Submit</button>
-
             </form>
-        </div>
+        </div> -->
 
 
     </div>

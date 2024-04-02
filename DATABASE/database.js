@@ -8,7 +8,8 @@ function connectToDatabase() {
 
     host: "localhost",
     user: "root",
-    password: "DemBoys!!!!"
+    password: "DemBoys!!!"
+
   });
   con.connect(err => {
     setupDatabase(err);
@@ -35,8 +36,14 @@ function setupDatabase(err) {
     if (err) throw err;
     console.log("User table dropped if it exits");
   })
+  var dropReviews = "DROP TABLE IF EXISTS Reviews"
+  con.query(dropReviews, function (err) {
+    if (err) throw err;
+    console.log("User table dropped if it exits");
+  })
   createDrinkTable();
   createUserLoginTable();
+  createReviewTable();
 }
 function createDrinkTable(){
   // 's' = signature drinks, 'c' = coffee, 't' = tea, 'i' = ice blended
@@ -46,6 +53,15 @@ function createDrinkTable(){
     console.log("Drink table created");
   })
   populateDrinktable();
+}
+function createReviewTable(){
+
+  var tablesql = "CREATE TABLE Reviews(id INT AUTO_INCREMENT PRIMARY KEY, review_text TEXT)";
+  con.query(tablesql, function (err) {
+    if (err) throw err;
+    console.log("Review table created");
+  })
+ // populateReviewTable(); // You should define this function to populate the Reviews table with initial data
 }
 function createUserLoginTable(){
 
@@ -65,11 +81,20 @@ function createUserLoginTable(){
 }
 
 function populateDrinktable(){
-  var insertsql = "INSERT INTO Drinks(name, image,price,type, description) VALUES('boba tea','https://www.unionsquareawards.org/wp-content/uploads/2019/09/images3904-5d882e0c1594c.jpg',2.50,'t', 'desc 1'),"
-    + "('lychee Tea','https://s3-media0.fl.yelpcdn.com/bphoto/Z0nZF9zYTaMVT5nbbGuxDA/o.jpg',3.75, 't', 'desc 2'),"
-    + "('Test Coffee','https://images.immediate.co.uk/production/volatile/sites/30/2020/08/flat-white-3402c4f.jpg?quality=90&webp=true&resize=500,454',5.00, 'c', 'desc 3'),"
-    + "('Some Signature Drink', 'http://1.bp.blogspot.com/-JFw1MGN5OoM/UD-BpCdlxzI/AAAAAAAAEMQ/brNZEjdhZWU/s1600/Lychee%2BMartini%2B3fc.jpg', 5.00, 's', 'desc 4'),"
-    + "('Ice Blended Drink', 'https://www.gfbfood.com.my/wp-content/uploads/2020/03/Untitled-design-1.jpg', 2.75, 'i', 'desc 5');"
+
+  // Format has to be /drinksPNGS/[image name here]
+  var insertsql = "INSERT INTO Drinks(name, image, price, type, description) VALUES('boba tea','/drinksPNGS/test1.jpg',2.50,'t', 'desc 1'),"
+    + "('Eggspresso Hanoi','/drinksPNGS/newtest2.webp',6.95, 's', 'phin-dripped milk coffee with sweet egg cream'),"
+    + "('Coco Freeze','/drinksPNGS/newtest3.webp',6.50, 's', 'coconut coffee blended with toasted coconut flakes'),"
+    + "('Signature Saigon', '/drinksPNGS/newtest4.webp', 6.75, 's', 'our house blend coffee with cloud cream'),"
+    + "('Peach', '/drinksPNGS/newtest5.webp', 6.75, 's', 'black tea infused with peach, orange, lemongrass'),"
+    + "('Lotus', '/drinksPNGS/newtest6.webp', 6.50, 's', 'creamy lotus milk tea with crystal boba');"
+    
+  // var insertsql = "INSERT INTO Drinks(name, image,price,type, description) VALUES('boba tea','/drinksPNGS/test1.jpg',2.50,'t', 'desc 1'),"
+  //   + "('lychee Tea','/drinksPNGS/test2.jpg',3.75, 't', 'desc 2'),"
+  //   + "('Test Coffee','/drinksPNGS/test3.webp',5.00, 'c', 'desc 3'),"
+  //   + "('Some Signature Drink', '/drinksPNGS/test4.jpg', 5.00, 's', 'desc 4'),"
+  //   + "('Ice Blended Drink', '/drinksPNGS/test5.jpg', 2.75, 'i', 'desc 5');"
   con.query(insertsql, function (err) {
     if (err) throw err;
     console.log("Test table filled");

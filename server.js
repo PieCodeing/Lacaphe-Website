@@ -1,24 +1,26 @@
 const express = require('express');
+const multer = require('multer');
 const bcrypt = require('bcrypt');
 
+// Images will be uploaded to ./PHOTOS/drinksPNGS
+const upload = multer({ dest: './PHOTOS/drinksPNGS' });
 
+//const jwt = require('jsonwebtoken');
 
 const cors = require('cors');
 
 const { v4: uuidv4 } = require('uuid');
 
-
 const app = express();
 const port = 3000;
-const db = require('./DATABASE/database'); 
+const db = require('./DATABASE/database');
 const path = require('path');
 const config = require("./CONFIG/auth.config");
-
-
+const cookieParser = require('cookie-parser');
 const {verifyToken} = require('./MIDDLEWARE/authjwt.js');
 
   var jwt = require("jsonwebtoken");
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const authJwt = require('./MIDDLEWARE/authjwt.js');
 
 const verifyNewAcount = require('./MIDDLEWARE/verifyNewAcount.js');
@@ -56,16 +58,16 @@ app.use(session({
   cookie: { secure: 'auto' } // 'auto' will use 'true' on HTTPS
 }));
 app.get('/', (req, res) => {
- 
+
   res.render('index.ejs');
 
-});app.get('/about', (req, res) => {
-  
+}); app.get('/about', (req, res) => {
+
   res.render('about.ejs');
 });
 
 app.get('/login', (req, res) => {
-  
+
   res.render('login.ejs');
 });
 app.get('/review', (req, res) => {
@@ -78,7 +80,90 @@ app.get('/userLogout', (req, res) => {
     res.render('userLogout.ejs');
   });
 
-// TODO: Temporary page, get rid of later
+app.get('/get-latest', (req, res) => {
+  const query = 'SELECT * FROM Drinks ORDER BY id DESC LIMIT 1';
+
+  db.getCon().query(query, (error, results) => {
+    if (error) throw error;
+    res.json(results[0]);
+  });
+});
+
+app.delete('/delete/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM Drinks WHERE id = ?';
+
+  db.getCon().query(query, [id], (error, results) => {
+    if (error) throw error;
+    res.send("Item deleted successfully");
+  });
+});
+
+app.post('/add-drink', upload.single('add-new-item-image'), (req, res) => {
+  const name = req.body['add-new-item-name'];
+  const description = req.body['add-new-item-description'];
+  const price = req.body['add-new-item-price'];
+  const drinkType = req.body['add-new-item-type'];
+  const SUCCESS_MSG = "Added menu item successfully";
+  let image = null;
+  if (req.file) {
+    image = '/drinksPNGS/' + req.file.filename;
+    const query = 'INSERT INTO Drinks (name, description, price, type, image) VALUES (?, ?, ?, ?, ?)';
+    db.getCon().query(query, [name, description, price, drinkType, image], (error, result) => {
+      if (error) throw error;
+      res.send(SUCCESS_MSG);
+    });
+  } else {
+    const query = 'INSERT INTO Drinks (name, description, price, type) VALUES (?, ?, ?, ?)'
+
+    db.getCon().query(query, [name, description, price, drinkType], (error, result) => {
+      if (error) throw error;
+      res.send(SUCCESS_MSG);
+    });
+  }
+
+  console.log(name, description, price, drinkType, image);
+
+})
+
+app.put('/edit-drinks', upload.single('add-new-image'), (req, res) => {
+  // console.log(req.body);
+  // let newImgPath, query;
+  const SUCCESS_MSG = "Item updated successfully";
+  const { id, name, price, description } = req.body;
+
+  function isValidPrice(price) {
+    return /^\d+(\.\d{1,2})?$/.test(price);
+  }
+
+  console.log(id, name, price, description, req.body.type);
+
+  if (!id || !isValidPrice(price) || !req.body.type) {
+    return res.status(400).send("Invalid Input data");
+  }
+
+  if (req.file) {
+    const newImgPath = '/drinksPNGS/' + req.file.filename;
+    const query = 'UPDATE Drinks SET image = ? WHERE id = ?';
+    db.getCon().query(query, [newImgPath, id], (error, result) => {
+      if (error) throw error;
+      console.log(SUCCESS_MSG);
+    });
+  }
+
+  const query = 'UPDATE Drinks SET name = ?, price = ?, description = ?, type = ? WHERE id = ?';
+
+  db.getCon().query(query, [name, price, description, req.body.type, id], (error, result) => {
+    if (error) throw error;
+    // console.log("Item updated successfully");
+    res.send(SUCCESS_MSG);
+  });
+
+  // console.log(req.file);
+  // res.send('Form data received');
+});
+
+// TODO: Temporary page, change
 app.get('/admin',[authJwt.verifyToken,authJwt.verifyAdmin],(req, res) => {
   res.render('admin.ejs');
 });
@@ -136,11 +221,11 @@ app.post('/createAcount',verifyNewAcount.checkDuplicateEmail, async (req, res) =
         return res.status(500).send('Error during registration');
       }
 
-      res.send('User registered successfully');
+      //res.send('User registered successfully');
     });
   } catch (error) {
     console.error('Error during registration:', error);
-    res.status(500).send('Error during registration');
+    //res.status(500).send('Error during registration');
   }
 });
 
@@ -182,7 +267,7 @@ app.get('/protected', authenticateToken, (req, res) => {
 
 app.get('/adminlogin', (req,res) =>{ //temporary page for admin login
 
-  res.render('adminLogin.ejs')  
+  res.render('adminLogin.ejs')
 });
 
 app.post('/adminLogin', async (req, res) => {
@@ -218,7 +303,7 @@ app.post('/adminLogin', async (req, res) => {
 });
 
 app.get('/drinks', (req, res) => {
-  
+
   res.render('drinks.ejs');
 });
 
@@ -234,7 +319,10 @@ app.get('/drinks/all', (req, res) => {
   });
 });
 
+
+
 app.get('/drinks/list', (req, res) => {
+  let id = req.query.id;
   let type = req.query.type;
   let name = req.query.name;
   let query = '';
@@ -247,7 +335,10 @@ app.get('/drinks/list', (req, res) => {
     // Assuming the 'name' column in your database is the one to search by
     query = 'SELECT * FROM Drinks WHERE name LIKE ?';
     queryParams = [`%${name}%`]; // Use LIKE for partial matches
-  } else {
+  } else if (id) {
+    query = 'SELECT * FROM Drinks WHERE id = ?';
+    queryParams = [id];
+  } else { // TODO: ADD Something here
     res.status(400).send('Missing type or name query parameter');
     return;
   }
@@ -261,21 +352,34 @@ app.get('/drinks/list', (req, res) => {
     res.json(result);
   });
 });
-
+app.post('/submit-review', async (req, res) => {
+  const reviewText = req.body.reviewText;
+  const insertSql = 'INSERT INTO Reviews (review_text) VALUES (?)';
+  
+  db.getCon().query(insertSql, [reviewText], function(err, result) {
+      if (err) {
+          console.error('Error inserting review:', err);
+          res.status(500).send('Error inserting review');
+          return;
+      }
+      console.log('Review inserted successfully:', result.insertId);
+      res.send('Review submitted successfully');
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
 // Establish connection to the database
-db.connectToDatabase(function(err) {
+db.connectToDatabase(function (err) {
   if (err) {
     console.error("Failed to connect to database:", err);
     return;
   }
 
   // If connection is successful, proceed to set up the database
-  db.setupDatabase(function(err) {
+  db.setupDatabase(function (err) {
     if (err) {
       console.error("Failed to setup database:", err);
       return;

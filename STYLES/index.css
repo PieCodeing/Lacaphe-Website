@@ -68,6 +68,7 @@ footer {
 .footer-right {
     display: flex; 
     align-items: center;
+    padding-top:5px;
     padding-right: 20px;
 }
 .footer-right img {
@@ -103,6 +104,74 @@ footer {
 .footer-nav-bar a:hover {
     text-decoration: underline; /* Adds underline on hover */
 }
+
+/* This section allows the page to respond to different sizes dynamically*/
+/* Global Image Responsiveness */
+.logo, .footer-right img, .phone-image img, .qr-code img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Adjust Photo Collection for Smaller Screens */
+.photo-collection .photo {
+    width: 100%; /* Ensures photos span the full width of their container on smaller screens */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Adjust Top Section Height and Padding */
+    .top {
+        height: 200px; /* Reduce height for smaller screens */
+        padding-top: 1%; /* Adjust padding to reduce space */
+    }
+
+    /* Navbar Adjustments */
+    .nav-bar {
+        flex-direction: column; /* Stack navbar items vertically */
+        gap: 15px; /* Add space between stacked items */
+    }
+
+    /* Adjust Navbar Links Font Size */
+    .nav-bar-link p {
+        font-size: 14px; /* Reduce font size for readability on smaller screens */
+    }
+
+    /* Adjust Text Block Heading Sizes */
+    .text-block h2 {
+        font-size: 1.5em; /* Make headings smaller on smaller screens */
+    }
+
+    /* Adjust Body Font Size */
+    body {
+        font-size: 14px; /* Reduce body text font size for smaller screens */
+    }
+
+    /* Featured Column Width Adjustment */
+    .featured-column {
+        width: 100%; /* Ensure feature columns take full width on smaller screens */
+    }
+
+    /* Additional Adjustments for Specific Sections */
+    /* Ensure the "Drinks" text and other nav-bar items do not overlap with the logo */
+    .logo {
+        flex-basis: 100%; /* Allows the logo to take full width of its container */
+        order: -1; /* Moves the logo above navbar items */
+        margin-bottom: 20px; /* Adds space below the logo */
+    }
+
+    /* This could help prevent overlap between the "Drinks" text and other elements */
+    .nav-bar, li {
+        text-align: center; /* Center-align the navbar items */
+    }
+
+    /* Ensure Footer Elements Stack Vertically */
+    .footer-right {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Consider adding additional media queries for other breakpoints if necessary to address specific layout or sizing issues on various devices. */
 
 
 
