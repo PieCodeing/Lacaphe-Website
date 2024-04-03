@@ -71,64 +71,6 @@
 
 /* ---- Popup End ------ */
 
-
-
-/* General Responsive Adjustments */
-
-@media (max-width: 768px) {
-    
-    /*hide the "DRINKS" title on smaller screens for improved visibility and look */
-    .inside_header h1 {
-        display: none;
-    }
-    
-    .nav-bar {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .nav-bar-link p {
-        font-size: 14px; /* Adjust font size for better readability */
-    }
-
-    /* responsive adjustments for smaller screens */
-    .hero-text, .category, .card h2, .card h3 {
-        font-size: 14px; /* Consistent font size adjustment for smaller screens */
-    }
-
-    #drink-display, .card {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        margin: 10px; /* Adjust margins for drink display cards */
-    }
-}
-
-@media (max-width: 480px) {
-    /* Adjustments for very small devices */
-    .nav-bar-link p {
-        font-size: 12px; /* Even smaller font size for better fit */
-    }
-}
-
-/*Responsive adjustments for images within cards and footer layout */
-.card img {
-    max-width: 100%;
-    height: auto;
-}
-
-@media (max-width: 540px) {
-    .footer-right, .container {
-        flex-direction: column;
-    }
-
-    .footer-nav-bar a {
-        display: block; /* Stack links vertically for better accessibility */
-        margin: 5px 0; /* Adjust spacing for clarity */
-    }
-}
-
-
-
 /* ---- Header Start ------ */
 
 body {

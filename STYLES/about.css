@@ -196,25 +196,3 @@ footer {
 .footer-nav-bar a:hover {
     text-decoration: underline; /* Adds underline on hover */
 }
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .nav-bar {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .inside_header h1 {
-        font-size: 3em;
-    }
-
-    .gallery img, .content-section img, .owners-section img {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .content-section, .owners-section {
-        flex-direction: column;
-    }
-}
-
-}
