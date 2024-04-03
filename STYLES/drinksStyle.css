@@ -25,7 +25,7 @@
 
 #popup {
     width: auto;
-    min-height: 10%;
+    min-height: 5%;
     display: flex;
     flex-direction: column;
     max-width: 800px;
@@ -38,7 +38,7 @@
 #desc-text {
     height: 100%;
     width: 100%;
-    background-color: #857f7f;
+    background-color: #1f2937;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,7 +48,7 @@
 #popup p {
     color: white;
     font-family: 'Times New Roman', Times, serif, Helvetica, sans-serif;
-    font-weight: light;
+    font-weight: bold;
     font-size: 30px;
     margin: 15px 15px 5px 15px;
 }
@@ -66,7 +66,7 @@
 }
 
 #desc-box {
-    background-color: #857f7f;
+    background-color: #1f2937;
 }
 
 /* ---- Popup End ------ */
@@ -195,7 +195,7 @@ body {
 .inside_header h1 {
     margin: 0;
     font-size: 6em;
-    font-family: 'Times New Roman', sans-serif;
+    font-family: 'Karma', sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -225,7 +225,7 @@ body {
 .drinks-section {
     display: flex;
     flex-direction: column;
-    background-color: #a38d75;
+    background-color: #919388;
 }
 
 #drink-categories {
@@ -308,47 +308,7 @@ body {
 }
 
 /* ------- Drink Display End  ------*/
-/* ------- Menu Display Start  ------*/
-.menu {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: space-between;
-    align-items: start;
-    background-color: #B4ADA1;
-    padding: 20px; /* Adjust padding as needed */
-}
 
-.menu > div {
-    text-align: center;
-}
-
-.menu h1 {
-    margin-top: 0; /* Prevent the headings from moving down */
-    color:#fff;
-    padding-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0.5, 0.5, 0, 0.5);
-}
-
-.menu .menu-drink {
-    text-align: center;
-    color:#fff;
-    padding-bottom: 35px;
-}
-
-.drinks_link{
-    transition: transform 0.3s ease; 
-    text-shadow: 1px 1px 8px rgba(94, 94, 94, 0.5);
-}
-
-.drinks_link a{
-    text-decoration: none;
-    color: white;
-    margin: 0px;
-}
-
-.drinks_link:hover{
-    transform: scale(0.9);
-}
 
 
 /* ----- Footer Start -----*/
@@ -368,7 +328,6 @@ footer {
 .footer-right {
     display: flex;
     align-items: center;
-    padding-top:5px;
     padding-right: 20px;
 }
 

@@ -1,5 +1,13 @@
 //Test function to verify tokens have been created
 //requires visuale studion rest extension to run
+POST http://localhost:3000/adminlogin
+Content-Type: application/json
+
+{
+    "email": "Demboys@gmail.com",
+    "password":"demboys!!"
+}
+###
 POST http://localhost:3000/login
 Content-Type: application/json
 
@@ -10,4 +18,5 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3000/tokenTest
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJlMjA5NWNkOS0xYmE0LTQ0ODctODkwYS1mZjZkZDIyNDg5ZGMiLCJlbWFpbCI6IkRlbWJveXNAZ21haWwuY29tIiwiaWF0IjoxNzA4ODQ5NTMxLCJleHAiOjE3MDg4NTA0MzF9.kAaoP_Z_mZ95KDF8VQVAPoCrMWfFIrw6XZ8Dt-yyWdg
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRlbWJveXNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTAwNTc5MjUsImV4cCI6MTcxMDA2MTUyNX0.iH6Zspt8ZvWTM8cXvza5a0TkzAXukoBIi7yH6NPWyeM; Path=/; HttpOnly; Secure; SameSite=Strict
+

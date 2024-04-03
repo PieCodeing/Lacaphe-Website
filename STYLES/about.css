@@ -9,7 +9,14 @@ body {
     background-size: cover;
     background-position: left; 
     height: 80vh; 
-}
+
+/*.header{
+    background-image: url('LACAPHEPIC3.jpg'); /* Placeholder 
+    background-size:cover;
+    background-position-y: -600px;
+    background-repeat: no-repeat;
+    height: 50vh; /*changed from 500 px because this makes it more responsive to different screen sizes
+  } */
 .top {
     display: flex;
     justify-content: space-around;
@@ -148,7 +155,6 @@ footer {
 .footer-right {
     display: flex; 
     align-items: center;
-    padding-top: 5px;
     padding-right: 20px;
 }
 .footer-right img {
