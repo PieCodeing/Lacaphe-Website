@@ -8,7 +8,7 @@ function connectToDatabase() {
 
     host: "localhost",
     user: "root",
-    password: "DemBoys!!!"
+    password: "DemBoys!!!!"
 
   });
   con.connect(err => {
