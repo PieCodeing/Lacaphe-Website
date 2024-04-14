@@ -1,11 +1,11 @@
 //Test function to verify tokens have been created
 //requires visuale studion rest extension to run
-POST http://localhost:3000/login
+POST http://localhost:3000/createAcount
 Content-Type: application/json
-
 {
     "email": "Demboys@gmail.com",
-    "password":"demboys!!"
+    "password":"demboys!!",
+    "role":"user"
 }
 ###
 
