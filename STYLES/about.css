@@ -72,7 +72,8 @@ body {
     justify-content: space-between;
 
     align-items: center;
-    background-color: chocolate;
+    background-color: #919388;
+
    /* padding: 20px;
 
     /*  margin: 20px;
@@ -98,9 +99,9 @@ body {
 .owners-section {
     display: flex;
     justify-content: space-between;
-
     align-items: center;
-    background-color: sandybrown;
+    background-color: #919388;
+
  
 }
 .owners-section div,
@@ -211,4 +212,3 @@ footer {
     }
 }
 
-}

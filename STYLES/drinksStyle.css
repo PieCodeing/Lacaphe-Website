@@ -71,64 +71,6 @@
 
 /* ---- Popup End ------ */
 
-
-
-/* General Responsive Adjustments */
-
-@media (max-width: 768px) {
-    
-    /*hide the "DRINKS" title on smaller screens for improved visibility and look */
-    .inside_header h1 {
-        display: none;
-    }
-    
-    .nav-bar {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .nav-bar-link p {
-        font-size: 14px; /* Adjust font size for better readability */
-    }
-
-    /* responsive adjustments for smaller screens */
-    .hero-text, .category, .card h2, .card h3 {
-        font-size: 14px; /* Consistent font size adjustment for smaller screens */
-    }
-
-    #drink-display, .card {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        margin: 10px; /* Adjust margins for drink display cards */
-    }
-}
-
-@media (max-width: 480px) {
-    /* Adjustments for very small devices */
-    .nav-bar-link p {
-        font-size: 12px; /* Even smaller font size for better fit */
-    }
-}
-
-/*Responsive adjustments for images within cards and footer layout */
-.card img {
-    max-width: 100%;
-    height: auto;
-}
-
-@media (max-width: 540px) {
-    .footer-right, .container {
-        flex-direction: column;
-    }
-
-    .footer-nav-bar a {
-        display: block; /* Stack links vertically for better accessibility */
-        margin: 5px 0; /* Adjust spacing for clarity */
-    }
-}
-
-
-
 /* ---- Header Start ------ */
 
 body {
@@ -308,47 +250,7 @@ body {
 }
 
 /* ------- Drink Display End  ------*/
-/* ------- Menu Display Start  ------*/
-.menu {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: space-between;
-    align-items: start;
-    background-color: #B4ADA1;
-    padding: 20px; /* Adjust padding as needed */
-}
 
-.menu > div {
-    text-align: center;
-}
-
-.menu h1 {
-    margin-top: 0; /* Prevent the headings from moving down */
-    color:#fff;
-    padding-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0.5, 0.5, 0, 0.5);
-}
-
-.menu .menu-drink {
-    text-align: center;
-    color:#fff;
-    padding-bottom: 35px;
-}
-
-.drinks_link{
-    transition: transform 0.3s ease; 
-    text-shadow: 1px 1px 8px rgba(94, 94, 94, 0.5);
-}
-
-.drinks_link a{
-    text-decoration: none;
-    color: white;
-    margin: 0px;
-}
-
-.drinks_link:hover{
-    transform: scale(0.9);
-}
 
 
 /* ----- Footer Start -----*/
@@ -368,7 +270,6 @@ footer {
 .footer-right {
     display: flex;
     align-items: center;
-    padding-top:5px;
     padding-right: 20px;
 }
 

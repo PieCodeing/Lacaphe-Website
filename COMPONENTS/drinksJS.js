@@ -154,8 +154,8 @@ function makeCard(item) {
     let drinkImg = document.createElement('img');
     let nameElement = document.createElement('h2');
     let priceElement = document.createElement('h3');
-    let imgWidth = '100px';
-    let imgHeight = '200px';
+    let imgWidth = '250px';
+    let imgHeight = '400px';
     newCard.className = 'card';
     drinkImg.style.width = imgWidth;
     drinkImg.style.height = imgHeight;
