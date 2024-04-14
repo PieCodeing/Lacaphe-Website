@@ -1,4 +1,4 @@
-//const authjwt = require('./MIDDLEWARE/authjwt.js');
+//Verifies that a token can be created.
 const createToken = require('./UNIT_FUNCTIONS/createToken');
 
 test('creation of json webtoken',()=>{

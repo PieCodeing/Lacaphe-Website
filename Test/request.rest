@@ -25,6 +25,9 @@ Content-Type: application/json
     "password":"demboys!!"
 }
 ###
+POST http://localhost:3000/logout'
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRlbWJveXNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTMwODAyMjAsImV4cCI6MTcxMzA4MzgyMH0.aCuspeFViiqvifR_WVsDySfUVyVsOZwQOQwvPwzdi2w; Path=/; HttpOnly; Secure; SameSite=Strict
+###
 
 GET http://localhost:3000/tokenTest
 Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkRlbWJveXNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3MTE2OTYzNTMsImV4cCI6MTcxMTY5OTk1M30.b8IrQDEx9xYGzn5ln8caTZ21mijsfOyAs79D_XqbxYk; Path=/; HttpOnly; Secure; SameSite=Strict
