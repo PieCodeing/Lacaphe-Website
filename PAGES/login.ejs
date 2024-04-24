@@ -90,7 +90,20 @@
             </div>
         </div>
     </div>
-
+    <div id="loginModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h2>Login Successful!</h2>
+            <div class="review-form-container">
+                <form id="reviewForm">
+                    <h2>Leave a Review</h2>
+            
+                    <textarea id="reviewText" name="reviewText" rows="4" cols="50" placeholder="Write your review here..."></textarea>
+                    <button type="submit">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="signout-popup">
         <div id="close-btn" class="close-btn">&times;</div>
@@ -128,6 +141,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/loginJS.js" defer></script>
+
+    
 </body>
 
 </html>

@@ -1,10 +1,28 @@
 // Get all category buttons
 class Category {
     _button;
-    constructor(elementID, isSelected = false) {
-        this._button = document.getElementById(elementID);
+    constructor(item, isSelected = false) {
+        // this._button = document.getElementById(elementID);
+        let btnName = item.name.toLowerCase().replace(/\s+/g, '-') + 'btn';
+        let button = document.createElement('button');
+        button.id = btnName;
+        button.className = 'category';
+        button.addEventListener('click', () => {
+            // selectButton(button);
+            selectCategory(this);
+        });
+        let btnText = document.createElement('h2');
+        btnText.textContent = item.name;
+        button.appendChild(btnText);
+        document.getElementById('drink-categories').appendChild(button);
+        this._button = button;
         this._isSelected = isSelected;
-        this._elementID = elementID;
+        this._elementID = btnName;
+        this._item = item;
+    }
+
+    get item() {
+        return this._item;
     }
 
     get button() {
@@ -23,40 +41,52 @@ class Category {
         this._isSelected = isSelected;
     }
 }
+
+
+
 const drinkDisplay = document.getElementById('drink-display');
-const sigDrinks = new Category('sig-drinks-btn');
-const eggspresso = new Category('eggspresso-btn');
-const cocoFreeze = new Category('coco-freeze-btn');
-const peach = new Category('peach-btn');
-const lotus = new Category('lotus-btn');
-const drinks = [sigDrinks, eggspresso, cocoFreeze, peach, lotus];
-//const drinks = [sigDrinks, coffee, tea, iceBlended];
-let lastType;
-// let lastClicked;
-let allCards;
-let url;
 
-document.addEventListener('DOMContentLoaded', () => {
-    selectButton(sigDrinks.button);
-});
+const categories = [];
 
-function refreshDisplaySection(type) {
-    if (type !== lastType) {
-        lastType = type;
-        removeCards();
-        url = '/drinks/list?type=' + encodeURIComponent(type);
-        // let categorySelected = null;
-        fetch(url)
-            .then(response => response.json())
-            .then(items => {
-                items.forEach(item => {
-                    console.log(item.name, item.image, item.price, item.type);
-                    // categorySelected = findSelected();
-                    makeCard(item);
-                });
-                makeCardsClickable();
-            })
-            .catch(error => console.error('Error:', error));
+let lastCategory;
+
+let buttonURL;
+let allDrinksURL = '/drinks/all';
+
+function initButtons() {
+    buttonURL = '/drinks/list?type=s';
+    // let categorySelected = null;
+    fetch(buttonURL)
+        .then(response => response.json())
+        .then(items => {
+            items.forEach(item => {
+                const newCategory = new Category(item, false);
+                categories.push(newCategory);
+                if (categories.length == 1) {
+                    selectCategory(newCategory);
+                }
+            });
+        })
+
+        .catch(error => console.error('Error:', error));
+}
+
+function selectCategory(category) {
+    console.log(category.item.name);
+    categories.forEach(c => {
+        c.isSelected = false;
+        c.button.classList.remove('selected');
+    });
+
+    category.button.classList.add('selected');
+    removeCards();
+    makeCard(category.item);
+    makeCardsClickable();
+
+    function removeCards() {
+        while (drinkDisplay.firstChild != null) {
+            drinkDisplay.removeChild(drinkDisplay.firstChild);
+        }
     }
     /**
      * Function that makes all cards clickable. 
@@ -67,19 +97,9 @@ function refreshDisplaySection(type) {
     function makeCardsClickable() {
         let itemName;
         let itemDescription;
-        /*
-        allCards = document.getElementsByClassName('card');
-        console.log(allCards.length);
-        for (let i = 0; i < allCards.length; i++) {
-            allCards[i].addEventListener('click', () => {
-                // console.log("clicked!");
-                createDescriptionPopup();
-            });
-        }
-        */
 
-        document.querySelectorAll('.card').forEach(function(card) {
-            card.addEventListener('click', function(event) {
+        document.querySelectorAll('.card').forEach(function (card) {
+            card.addEventListener('click', function (event) {
                 itemName = this.querySelector('h2').textContent;
                 console.log('Item: ', itemName); // For debugging
                 createDescriptionPopup();
@@ -97,7 +117,16 @@ function refreshDisplaySection(type) {
             descBox.id = 'desc-box';
             document.body.appendChild(blackBackground);
             blackBackground.appendChild(popup);
-            popup.append(descText, descBox);
+            let button = document.createElement('button');
+            button.textContent = 'Order'
+            button.id = 'specialty-order-btn';
+            // button.style.cssText = 'align-self: center; margin-top: 20px; padding: 10px 20px; border-radius: 20px; border: 2px solid chocolate; background-color: #857f7f; cursor: pointer;';
+            // let orderBtnText = document.createElement('p');
+            // orderBtnText.style.cssText = 'font-size: 15px;';
+            // orderBtnText.textContent = "Order";
+            // orderBtnText.style.margin = '10px';
+            // button.appendChild(orderBtnText);
+            popup.append(descText, descBox, button);
 
             // descText
             let spacer = document.createElement('div');
@@ -114,12 +143,13 @@ function refreshDisplaySection(type) {
             closeBtn.alt = 'close';
             descText.append(spacer, p, spacer2, closeBtn);
 
+
             //descBox
             let description = document.createElement('p');
             description.style.cssText = 'margin: 30px';
             let encodedItemName = encodeURIComponent(itemName);
             url = '/drinks/list?name=' + encodedItemName;
-            fetch(url) 
+            fetch(url)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('HTTP error! ${response.status}')
@@ -131,21 +161,29 @@ function refreshDisplaySection(type) {
                         itemDescription = item.description;
                         console.log(itemDescription);
                         description.textContent = itemDescription; // Must put in here; asynchronous
-                    }) 
+                        button.onclick = function() {
+                            window.open(item.url, '_blank');
+                        }
+                    })
                 })
             descBox.appendChild(description);
-            closeBtn.addEventListener('click', function() {
-                blackBackground.remove();  
+            closeBtn.addEventListener('click', function () {
+                blackBackground.remove();
             });
         }
     }
-    function removeCards() {
-        while (drinkDisplay.firstChild != null) {
-            drinkDisplay.removeChild(drinkDisplay.firstChild);
-        }
-    }
 }
+//const drinks = [sigDrinks, coffee, tea, iceBlended];
+let lastType;
+// let lastClicked;
+let allCards;
+let url;
 
+document.addEventListener('DOMContentLoaded', () => {
+    initButtons();
+});
+
+// refreshDisplaySection() and selectButton() are gone now
 
 
 function makeCard(item) {
@@ -170,145 +208,55 @@ function makeCard(item) {
     newCard.appendChild(priceElement);
 }
 
+fetch(allDrinksURL)
+    .then(response => response.json())
+    .then(items => {
+        const coffeeSection = document.getElementById('coffee');
+        const teaSection = document.getElementById('tea');
+        const iceBlendedSection = document.getElementById('ice');
 
+        items.forEach(item => {
+            switch (item.type) {
+                case 'c':
+                    // coffee.push(item); 
+                    addNonSignatureDrink(coffeeSection);
+                    break;
+                case 't':
+                    // tea.push(item);
+                    addNonSignatureDrink(teaSection);
+                    break;
+                case 'i':
+                    // iceBlended.push(item);
+                    addNonSignatureDrink(iceBlendedSection);
+                    break;
+                default:
+                // Do nothing
+            }
 
-/**
- * Adds the appropriate CSS class to the category selected.
- * 
- * When the category (technically a button) is clicked, the function will 
- * add the .selected subclass to the button's CSS style, and remove the 
- * subclass' styling from the other category.
- *  
- * 
- * @param {*} selectedButton 
- */
-function selectButton(selectedButton) {
-    drinks.forEach(drink => {
-        drink.isSelected = false;
-        drink.button.classList.remove('selected');
-    });
+            function addNonSignatureDrink(section) {
+                const drinkDiv = document.createElement("div");
+                drinkDiv.classList.add("menu-drink");
 
-    selectedButton.classList.add('selected');
-    falsifyAll();
+                const drinkLink = document.createElement("a");
+                drinkDiv.classList.add("drinks_link");
+                drinkLink.href = item.url;
+                drinkLink.target = "_blank";
 
-    switch (selectedButton) {
-        case document.getElementById('sig-drinks-btn'):
-            // sigDrinks.isSelected = true;
-            refreshDisplaySection('s');
-            break;
-        case document.getElementById('eggspresso-btn'):
-            // coffee.isSelected = true;
-            refreshDisplaySection('e');
-            break;
-        case document.getElementById('coco-freeze-btn'):
-            // tea.isSelected = true;
-            refreshDisplaySection('c');
-            break;
-        case document.getElementById('peach-btn'):
-            // iceBlended.isSelected = true;
-            refreshDisplaySection('p');
-            break;
-        case document.getElementById('lotus-btn'):
-             //iceBlended.isSelected = true;
-            refreshDisplaySection('l');
-            break;    
-    }
-    // checkSelected();
-    // refreshDisplaySection();
-    function falsifyAll() {
-        drinks.forEach(drink => {
-            drink.isSelected = false;
-        });
-    }
-    /**
-     * Debugger function to check if only the correct button is considered selected 
-     * by the website.
-     * 
-     * The website loops through each drink object to see if their isSelected variable
-     * is set to true. Expected output is that only ONE button should be set to true.
-     */
-    function checkSelected() {
-        drinks.forEach(drink => {
-            if (drink.isSelected) {
-                console.log(drink.elementID + " has been selected");
-            } else {
-                console.log(drink.elementID + " has NOT been selected");
+                const nameHeading = document.createElement("h3");
+                nameHeading.textContent = item.name;
+
+                const descriptionParagraph = document.createElement("p");
+                descriptionParagraph.textContent = item.description;
+
+                drinkLink.appendChild(nameHeading);
+                drinkLink.appendChild(descriptionParagraph);
+
+                drinkDiv.appendChild(drinkLink);
+
+                section.after(drinkDiv);
             }
         });
-    }
-}
 
 
-drinks.forEach(drink => {
-    drink.button.addEventListener('click', () => selectButton(drink.button));
-})
-
-const menuData = [
-    {
-        category: "Coffee",
-        drinks: [
-            { name: "MUỐI", description: "salted phin-dripped milk coffee, cloud cream", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=6#3"  },
-            { name: "COCONUT", description: "phin-dripped coffee, coconut cream, grass jelly", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=15#3"  },
-            { name: "UBE", description: "phin-dripped coffee, ube fresh milk", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=17#3"  },
-            { name: "NÂU", description: "vietnamese coffee", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=14#3"  },
-            { name: "BẠC XỈU", description: "lighter version of Nâu, less caffeinated", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=20#3"  }
-        ]
-    },
-    {
-        category: "Tea & Milk Tea",
-        drinks: [
-            { name: "LYCHEE", description: "premium lotus tea, fresh lychee pulps", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=16#4"},
-            { name: "STRAWBERRY", description: "full-leaf oolong tea, homemade strawberries",link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=13#4" },
-            { name: "KUMQUAT CHIA", description: "kumquat lotus tea, chia seeds, aloe vera", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=8#4" },
-            { name: "HOUSE MILK TEA", description: "oolong jasmine milk tea, oolong pearls", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=4#4"  },
-            { name: "GOLDEN LOTUS", description: "full-leaf oolong tea, lotus seeds, cloud cream", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=9#4"  }
-        ]
-    },
-    {
-        category: "Ice Blended",
-        drinks: [
-            { name: "KUMQUAT SALTED PLUM", description: "kumquat juice blended with salted plum and mint", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=12#5"  },
-            { name: "COCOMANGO", description: "coconut milk blended with fresh mango bits", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=11#5"  },
-            { name: "SAIGON FREEZE", description: "Signature Saigon but blended", link: "https://lacaphe.square.site/?location=11ee213d7e10ea94b2b23cecef6d5b2a&item=18#5"  }
-        ]
-    }
-];
-
-function createDrinkElements() {
-    const menuContainer = document.querySelector(".menu");
-
-    menuData.forEach(category => {
-        const categoryDiv = document.createElement("div");
-        const categoryHeading = document.createElement("h1");
-        categoryHeading.textContent = category.category;
-        categoryDiv.appendChild(categoryHeading);
-
-        category.drinks.forEach(drink => {
-            const drinkDiv = document.createElement("div");
-            drinkDiv.classList.add("menu-drink");
-
-            const drinkLink = document.createElement("a");
-            drinkDiv.classList.add("drinks_link");
-            drinkLink.href = drink.link;
-            drinkLink.target = "_blank";
-
-            const nameHeading = document.createElement("h3");
-            nameHeading.textContent = drink.name;
-
-            const descriptionParagraph = document.createElement("p");
-            descriptionParagraph.textContent = drink.description;
-
-            drinkLink.appendChild(nameHeading);
-            drinkLink.appendChild(descriptionParagraph);
-
-            drinkDiv.appendChild(drinkLink);
-
-            categoryDiv.appendChild(drinkDiv);
-        });
-
-        menuContainer.appendChild(categoryDiv);
-    });
-}
-
-
-createDrinkElements();
+    })
+    .catch(error => console.error('Error:', error));

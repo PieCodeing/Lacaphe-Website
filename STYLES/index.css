@@ -220,6 +220,17 @@ footer {
 }
 
 /* ----------- for Photo collection divs below ------------ */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.gallery img {
+    width: 30%;
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
+    flex-grow: 1;
+}
 .photo-collection {
     display: flex;
 }

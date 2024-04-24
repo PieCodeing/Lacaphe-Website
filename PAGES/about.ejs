@@ -64,31 +64,46 @@
     <!-- This section will pull the ejs from login.ejs -->
     <%- include('login.ejs') %>    
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(window).scroll(function() {
+                $('.hideme').each(function() {
+                    var bottom_of_object = $(this).position().top + $(this).outerHeight();
+                    var bottom_of_window = $(window).scrollTop() + $(window).height();
+                    if (bottom_of_window > bottom_of_object) {
+                        $(this).animate({'opacity': '1'}, 500);
+                    }
+                });
+            });
+        });
+    </script>
+    
     <!--img are just placeholders for now until we get desired images-->
     <div class="content-section">
-        <div>
+        <div class="hideme">
             <h2>OUR STORY</h2>
-            <p><strong>Here we will write about the history of your company, how it started, and the journey so far.</strong></p>
+            <p><strong>We started from an Instagram page ran by the three co-owners where customers could order from online and pick up at our homes. Due to high demands and success with orders from the Instagram page, the three co-owners were able to come together to open their first shop right by Vietnamtown in Little Saigon! What makes this business stand out from the rest is that the coffee beans they get are special ones imported from Vietnam. This would give our drinks a unique taste and bring a taste from our home to here in the Untied States!!</strong></p>
         </div>
-        <img src="/about_page_photos_lecaphe/OurStory.jpg" alt="Our Story Image">
+        <img class="hideme" src="/about_page_photos_lecaphe/OurStory.jpg" alt="Our Story Image">
     </div>
-
-    <div class="content-section">
-        <img src="/about_page_photos_lecaphe/OurMission.jpg" alt="Our Mission Image">
-        <div>
+    
+    <div class="content-section content_section_bottom">
+        <img class="hideme" src="/about_page_photos_lecaphe/OurMission.jpg" alt="Our Mission Image">
+        <div class="hideme">
             <h2>OUR MISSION</h2>
             <p><strong>Our mission is to promote the image of Vietnamese coffee to everyone. We want to become the coffee shop that can bring Vietnamese people closer together and also a place where we can share Vietnamese cultural content to younger generations. We want to build a store culture to differentiate ourselves from other business models in the same industry. Every day a lot of new stores are opened, if there is no difference to stand out, there will be little to no room to grow. We want to create the core values for the store from our products, services, and the way we operate.</strong></p>
         </div>
     </div>
-
-    <div class="owners-section">
-        <div>
+    
+    <div class="content-section">
+        <div class="hideme">
             <h2>MEET THE OWNERS</h2>
-            <p><strong>We are Anh, Tho, and Thy - the founders and the first three employees of Lacàphê. We are a mix of thinkers and dreamers that came from different professional background- hospitality, F&B, and law, but how come Lacàphê happened? Well, …. Covid happened 😅 During quarantine, we felt bored with our corporate job and wanted to do something different and ambitious. The idea of opening a Vietnamese coffee shop (but NOT the type of Viet coffee shops you are thinking of 🤭) came to mind. 6 months later, Lacàphê opened for pre-order and the first Eggspresso Hanoi was sold in May, 2021. Over the years, we received an immense amount of support from the Vietnamese community who wanted a sip of their home country. We wanted to escape the dreading 9-5 job but ended up working 24/7 which we has no complaints about. Lacàphê has brought us so much opportunities, creativity, and lessons that we can't imagine. We believe that Lacàphê can be so much more, not just a typical coffee shop. Follow us on our social media to witness our growth and be a part of it 🤎 </strong></p>
+            <p><strong>We are Anh, Tho, and Thy - the founders and the first three employees of Lacàphê. We are a mix of thinkers and dreamers that came from different professional background- hospitality, F&B, and law, but how come Lacàphê happened? Well, …. Covid happened 😅 During quarantine, we felt bored with our corporate job and wanted to do something different and ambitious. The idea of opening a Vietnamese coffee shop (but NOT the type of Viet coffee shops you are thinking of 🤭) came to mind. 6 months later, Lacàphê opened for pre-order and the first Eggspresso Hanoi was sold in May, 2021. Over the years, we received an immense amount of support from the Vietnamese community who wanted a sip of their home country. We wanted to escape the dreading 9-5 job but ended up working 24/7 which we has no complaints about. Lacàphê has brought us so much opportunities, creativity, and lessons that we can't imagine. We believe that Lacàphê can be so much more, not just a typical coffee shop. Follow us on our social media to witness our growth and be a part of it 🤎</strong></p>
         </div>
-        <img src="/about_page_photos_lecaphe/OwnersEdited.jpeg" alt="Owner Picture">
+        <img class="hideme" src="/about_page_photos_lecaphe/OwnersEdited.jpeg" alt="Owner Picture">
     </div>
+    
 
     <div class="gallery">
         <!-- Can add more images by repeating (only have three for now) -->

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="/drinksStyle.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karma:wght@400;700&display=swap">
 </head>
+
 <body>
 
     <!--
@@ -27,133 +29,133 @@
 
 
 
-        <!--Links to other sections-->
-        <div class="header">
-            <div class="top">
-                <ul>
+    <!--Links to other sections-->
+    <div class="header">
+        <div class="top">
+            <ul>
+                <a class="nav-bar-link" href="/">
+                    <p><img class="logo" src="./logo_white.png" alt="Lacaphe Placeholder Logo"></p>
+                </a>
+            </ul>
+            <ul class="nav-bar">
+                <li>
                     <a class="nav-bar-link" href="/">
-                        <p><img class="logo" src="./logo_white.png"  alt= "Lacaphe Placeholder Logo"></p>
+                        <p>HOME</p>
                     </a>
-                </ul>
-                <ul class="nav-bar">
-                    <li>
-                        <a class="nav-bar-link" href="/">
-                            <p>HOME</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-bar-link" href="/about">
-                            <p>ABOUT</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-bar-link" href="https://lacaphe.square.site/">
-                            <p>ORDER</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-bar-link" href="/drinks">
-                            <p>DRINKS</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-bar-link" href="https://lacaphe.carrd.co/">
-                            <p>CONNECT</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-bar-link" href="/login">
-                            <p>LOGIN</p>
-                        </a>
-                    </li>
-                    
-                    <li>
-                        <a class="nav-bar-link" href="https://www.instagram.com/lacaphe.sj/?hl=en">
-                                <p><img src="./iconsInstagram.png" alt="Instagram"></p>
-                            </a>
-                    </li>
-                    <!--using a logo to connect like showen in Figma mockup -->
-                </ul>
-                <%- include('login.ejs') %> 
+                </li>
+                <li>
+                    <a class="nav-bar-link" href="/about">
+                        <p>ABOUT</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-bar-link" href="https://lacaphe.square.site/">
+                        <p>ORDER</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-bar-link" href="/drinks">
+                        <p>DRINKS</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-bar-link" href="https://lacaphe.carrd.co/">
+                        <p>CONNECT</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-bar-link" href="/login">
+                        <p>LOGIN</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a class="nav-bar-link" href="https://www.instagram.com/lacaphe.sj/?hl=en">
+                        <p><img src="./iconsInstagram.png" alt="Instagram"></p>
+                    </a>
+                </li>
+                <!--using a logo to connect like showen in Figma mockup -->
+            </ul>
+            <%- include('login.ejs') %>
                 <div class="inside_header">
                     <h1>DRINKS</h1>
                 </div>
-            </div>
         </div>
-    
+    </div>
+
     <!-- This section will pull the ejs from login.ejs -->
-    <%- include('login.ejs') %>  
+    <%- include('login.ejs') %>
 
-    <div class="drinks-section">
-        <div id="drink-categories">
-            <button class="category" id="sig-drinks-btn">
-                <h2>SIGNATURE SAIGON</h2>
-            </button>
-            <button class="category" id="eggspresso-btn">
-                <h2>EGGSPRESSO HANOI</h2>
-            </button>
-            <button class="category" id="coco-freeze-btn">
-                <h2>COCO FREEZE</h2>
-            </button>
-            <button class="category" id="peach-btn">
-                <h2>PEACH</h2>
-            </button>
-            <button class="category" id="lotus-btn">
-                <h2>LOTUS</h2>
-            </button>
-        </div>
-        <div id="drink-display">
-            <!--Below is just a template of what's in the drinksJS,remove when finished-->
-            <!--
-            <div class="card">
-                <img width="100px" height="200px" src="https://s3-media0.fl.yelpcdn.com/bphoto/Z0nZF9zYTaMVT5nbbGuxDA/o.jpg">
-                <h2>Lychee Tea</h2>
-                <h3>$3.29</h3>
+        <div class="drinks-section">
+            <h1 style="align-self: center;">Signature Drinks</h1> 
+            <div id="drink-categories">
             </div>
-            -->
-        </div>
-    </div>
-    <div id="menu" class="menu">
-        <!--Coming from JavaScript-->
-    </div>
-    <footer>
-        <div class="container">
-            <p>740 Story Rd #5, San Jose, CA 95122<br>+1(408) 564-6237<br></p>
-            
-            <div class="footer-right">
-                <!--Social Media Links added-->   
-                <a class="nav-bar-link" href="https://www.yelp.com/biz/lac%C3%A0ph%C3%AA-san-jose"><p><img src="./iconsYelp.png" alt="Yelp"></p></a>
-                <a class="nav-bar-link" href="https://www.facebook.com/lacaphe.sj/"><p><img src="./iconsFacebook.png" alt="Facebook"></p></a>
-                <a class="nav-bar-link" href="https://www.tiktok.com/@lacaphesj?lang=en"><p><img src="./iconsTikTok.png" alt="TikTok"></p></a>
-                <a class="nav-bar-link" href="https://www.instagram.com/lacaphe.sj/?hl=en"><p><img src="./iconsInstagram.png" alt="Instagram"></p></a>
-                
+            <div id="drink-display">
             </div>
         </div>
-    </footer>
-    <footer class="map-footer">
-        <div class="container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25380.643466810565!2d-121.89502821023045!3d37.32876500769921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808e33ffa1db20cd%3A0x34da9e6455994d08!2zTGFjw6BwaMOq!5e0!3m2!1sen!2sus!4v1701291087332!5m2!1sen!2sus" width="900" height="200" style="border: 1px solid #ccc; border-radius: 10px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            <div class="footer-right">
-                <p>Monday       Closed
-                <br>Tuesday     9:00 am - 6:00 pm 
-                <br>Wednesday   9:00 am - 6:00 pm
-                <br>Thursday    9:00 am - 6:00 pm 
-                <br>Friday      9:00 am - 6:00 pm 
-                <br>Saturday    9:00 am - 7:00 pm 
-                <br>Sunday      9:00 am - 7:00 pm </p>
+        <div id="menu" class="menu">
+            <!--Coming from JavaScript-->
+            <div>
+                <h1 id="coffee">Coffee</h1>
+            </div>
+            <div>
+                <h1 id="tea">Tea & Milk Tea</h1>
+            </div>
+            <div>
+                <h1 id="ice">Ice Blended</h1>
+            </div>
+        </div>
+        <footer>
+            <div class="container">
+                <p>740 Story Rd #5, San Jose, CA 95122<br>+1(408) 564-6237<br></p>
 
+                <div class="footer-right">
+                    <!--Social Media Links added-->
+                    <a class="nav-bar-link" href="https://www.yelp.com/biz/lac%C3%A0ph%C3%AA-san-jose">
+                        <p><img src="./iconsYelp.png" alt="Yelp"></p>
+                    </a>
+                    <a class="nav-bar-link" href="https://www.facebook.com/lacaphe.sj/">
+                        <p><img src="./iconsFacebook.png" alt="Facebook"></p>
+                    </a>
+                    <a class="nav-bar-link" href="https://www.tiktok.com/@lacaphesj?lang=en">
+                        <p><img src="./iconsTikTok.png" alt="TikTok"></p>
+                    </a>
+                    <a class="nav-bar-link" href="https://www.instagram.com/lacaphe.sj/?hl=en">
+                        <p><img src="./iconsInstagram.png" alt="Instagram"></p>
+                    </a>
+
+                </div>
             </div>
-        </div>
-        <p class="footer-nav-bar">
-            <a href="/">Home</a> | 
-            <a href="/about">About</a> | 
-            <a href="https://lacaphe.square.site/">Order</a> | 
-            <a href="/drinks">Drinks</a> | 
-            <a href="https://lacaphe.carrd.co/">Connect</a> | 
-            <a href="/login">Login</a>
-        </p>
-    </footer>
-    <script src="/drinksJS.js"></script>
-    <script src="login.ejs" defer></script>
+        </footer>
+        <footer class="map-footer">
+            <div class="container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25380.643466810565!2d-121.89502821023045!3d37.32876500769921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808e33ffa1db20cd%3A0x34da9e6455994d08!2zTGFjw6BwaMOq!5e0!3m2!1sen!2sus!4v1701291087332!5m2!1sen!2sus"
+                    width="900" height="200" style="border: 1px solid #ccc; border-radius: 10px;" allowfullscreen=""
+                    loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <div class="footer-right">
+                    <p>Monday Closed
+                        <br>Tuesday 9:00 am - 6:00 pm
+                        <br>Wednesday 9:00 am - 6:00 pm
+                        <br>Thursday 9:00 am - 6:00 pm
+                        <br>Friday 9:00 am - 6:00 pm
+                        <br>Saturday 9:00 am - 7:00 pm
+                        <br>Sunday 9:00 am - 7:00 pm
+                    </p>
+
+                </div>
+            </div>
+            <p class="footer-nav-bar">
+                <a href="/">Home</a> |
+                <a href="/about">About</a> |
+                <a href="https://lacaphe.square.site/">Order</a> |
+                <a href="/drinks">Drinks</a> |
+                <a href="https://lacaphe.carrd.co/">Connect</a> |
+                <a href="/login">Login</a>
+            </p>
+        </footer>
+        <script src="/drinksJS.js"></script>
+        <script src="login.ejs" defer></script>
 </body>
+
 </html>

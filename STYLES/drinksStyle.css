@@ -3,7 +3,8 @@
 @keyframes slideDown {
     from {
         height: 0%
-    } 
+    }
+
     to {
         height: 100%
     }
@@ -137,34 +138,43 @@ body {
     background-color: white;
     font-family: 'Times New Roman', Times, serif, Helvetica, sans-serif;
 }
+
 .header {
-    background-image: url('about_page_photos_lecaphe/OurStory.jpg'); /* Placeholder */
+    background-image: url('about_page_photos_lecaphe/OurStory.jpg');
+    /* Placeholder */
     background-size: cover;
-    background-position: left 55%; 
-    height: 80vh; 
+    background-position: left 55%;
+    height: 80vh;
 }
+
 .top {
     display: flex;
     justify-content: space-around;
     width: auto;
     height: 400px;
-    padding-top: 3%; /* I changed this to 3% cause I think 7% makes it too bulky up top*/
+    padding-top: 3%;
+    /* I changed this to 3% cause I think 7% makes it too bulky up top*/
 }
+
 .nav-bar {
     list-style-type: none;
     display: flex;
     gap: 30px;
 }
+
 .logo {
     width: 150px;
     height: 240px;
     margin: 0;
 }
-.nav-bar, li {
+
+.nav-bar,
+li {
     color: white;
 }
+
 .nav-bar li:last-child {
-    margin-top: -7px; 
+    margin-top: -7px;
 }
 
 
@@ -175,7 +185,7 @@ body {
 
 .nav-bar-link p {
     margin: 0px;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
@@ -315,38 +325,62 @@ body {
     justify-content: space-between;
     align-items: start;
     background-color: #B4ADA1;
-    padding: 20px; /* Adjust padding as needed */
+    padding: 20px;
+    /* Adjust padding as needed */
 }
 
-.menu > div {
+
+
+.menu>div {
     text-align: center;
 }
 
 .menu h1 {
-    margin-top: 0; /* Prevent the headings from moving down */
-    color:#fff;
+    margin-top: 0;
+    /* Prevent the headings from moving down */
+    color: #fff;
     padding-bottom: 15px;
     text-shadow: 2px 2px 4px rgba(0.5, 0.5, 0, 0.5);
 }
 
+div>h1:first-child {
+    margin-top: 0;
+    /* Prevent the headings from moving down */
+    color: #fff;
+    padding-top: 35px;
+    text-shadow: 2px 2px 4px rgba(0.5, 0.5, 0, 0.5);
+}
+
+#specialty-order-btn {
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    background: #222;
+    color: #f5f5f5;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
 .menu .menu-drink {
     text-align: center;
-    color:#fff;
+    color: #fff;
     padding-bottom: 35px;
 }
 
-.drinks_link{
-    transition: transform 0.3s ease; 
+.drinks_link {
+    transition: transform 0.3s ease;
     text-shadow: 1px 1px 8px rgba(94, 94, 94, 0.5);
 }
 
-.drinks_link a{
+.drinks_link a {
     text-decoration: none;
     color: white;
     margin: 0px;
 }
 
-.drinks_link:hover{
+.drinks_link:hover {
     transform: scale(0.9);
 }
 
@@ -362,13 +396,14 @@ footer {
 
 .container {
     display: flex;
-    align-items: center; 
-    justify-content: space-between; 
+    align-items: center;
+    justify-content: space-between;
 }
+
 .footer-right {
     display: flex;
     align-items: center;
-    padding-top:5px;
+    padding-top: 5px;
     padding-right: 20px;
 }
 
@@ -383,8 +418,10 @@ footer {
     text-decoration: none;
     color: white;
     padding-right: 10px;
-    font-family: Georgia, sans-serif; /* Change font-family */
-    line-height: 1.5; /* Increase line height */
+    font-family: Georgia, sans-serif;
+    /* Change font-family */
+    line-height: 1.5;
+    /* Increase line height */
 }
 
 .container {
@@ -397,19 +434,26 @@ footer {
     margin-top: 0;
     padding-bottom: 10px;
 }
+
 .footer-nav-bar {
     text-align: center;
-    background-color: #000; /* Set the background color of the navigation bar */
+    background-color: #000;
+    /* Set the background color of the navigation bar */
 }
 
-.footer-nav-bar a, .footer-nav-bar a:visited {
-    color: white; /* Sets the text color for links */
-    text-decoration: none; /* Removes underline from links */
-    margin: 0 10px; /* Spaces out links */
+.footer-nav-bar a,
+.footer-nav-bar a:visited {
+    color: white;
+    /* Sets the text color for links */
+    text-decoration: none;
+    /* Removes underline from links */
+    margin: 0 10px;
+    /* Spaces out links */
 }
 
 .footer-nav-bar a:hover {
-    text-decoration: underline; /* Adds underline on hover */
+    text-decoration: underline;
+    /* Adds underline on hover */
 }
 
 /* ------ Footer End ------- */

@@ -76,59 +76,50 @@ body {
 }
 
 .content-section {
-    display: flex;
-    justify-content: space-between;
-
-    align-items: center;
-    background-color: chocolate;
-   /* padding: 20px;
-
-    /*  margin: 20px;
-    padding: 20px;
-   /* background-color: white;*/
-}
-.content-section div,
-.content-section img {
-
-    flex-basis: 50%;
-    object-fit: cover;
-    aspect-ratio: 16 / 9;
-    flex-grow: 1;
-
-}
-.content-section p,h2 {
-    padding: 20px; /* Adjust the padding as needed */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); /* Adjust column width as needed */
 }
 
 .content-section img {
-    padding: 0; /* This ensures that images have no padding */
-}
-.owners-section {
-    display: flex;
-    justify-content: space-between;
-
-    align-items: center;
-    background-color: sandybrown;
- 
-}
-.owners-section div,
-.owners-section img {
-    flex-basis: 50%;
+    width: 100%;
     object-fit: cover;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 3 / 2;
     flex-grow: 1;
 }
-.owners-section img {
-    max-width: 100%;
-    height: auto;
-}
-.owners-section p,h2 {
-    padding: 20px; /* Adjust the padding as needed */
+
+.content-section .hideme {
+    opacity: .01;
 }
 
-.owners-section img {
-    padding: 0; /* This ensures that images have no padding */
+.content-section p{
+    font-family: 'Karma', sans-serif;
+    padding: 2%;
+    padding-bottom: 0;
+    text-align: center;
+    color:#fff;
+    font-size: min(1.1vw, 15px);
 }
+.content-section h2{
+    font-family: 'Karma', sans-serif;
+    padding: 2%;
+    padding-bottom: 0;
+    text-align: center;
+    color:#fff;
+    font-size: 18px;
+}
+
+/* Apply background gradient to the entire content section */
+.content-section {
+    background: linear-gradient(to bottom, #B4ADA1, #919388);
+}
+
+/* Reverse gradient for bottom content section */
+.content_section_bottom {
+    background: linear-gradient(to bottom, #919388, #B4ADA1);
+}
+
+
+
 .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -197,3 +188,25 @@ footer {
 .footer-nav-bar a:hover {
     text-decoration: underline; /* Adds underline on hover */
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-bar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .inside_header h1 {
+        font-size: 3em;
+    }
+
+    .gallery img, .content-section img, .owners-section img {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .content-section, .owners-section {
+        flex-direction: column;
+    }
+}
+

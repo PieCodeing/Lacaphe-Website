@@ -136,6 +136,20 @@ class Item {
                 editForm.appendChild(labelPrice);
                 editForm.appendChild(inputPrice);
 
+                // URL
+                let labelURL = document.createElement('label');
+                labelURL.setAttribute('for', 'url');
+                labelURL.textContent = 'URL';
+                let inputURL = document.createElement('input');
+                inputURL.type = 'text';
+                inputURL.id = 'url';
+                inputURL.name = 'url';
+                inputURL.value = this._menuItem.url;
+                inputURL.required = true;
+                editForm.appendChild(labelURL);
+                editForm.appendChild(inputURL);
+
+
                 // Description
                 let labelDescription = document.createElement('label');
                 labelDescription.setAttribute('for', 'description');
@@ -148,6 +162,7 @@ class Item {
                 inputDescription.required = true;
                 editForm.appendChild(labelDescription);
                 editForm.appendChild(inputDescription);
+
 
                 // Image
                 /*

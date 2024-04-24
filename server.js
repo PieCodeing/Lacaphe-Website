@@ -70,7 +70,7 @@ app.get('/login', (req, res) => {
 
   res.render('login.ejs');
 });
-app.get('/review', (req, res) => {
+app.get('/review', authJwt.verifyUser, (req, res) => {
   
   res.render('review.ejs');
 });
@@ -104,19 +104,20 @@ app.post('/add-drink', upload.single('add-new-item-image'), (req, res) => {
   const description = req.body['add-new-item-description'];
   const price = req.body['add-new-item-price'];
   const drinkType = req.body['add-new-item-type'];
+  const url = req.body['add-new-item-url'];
   const SUCCESS_MSG = "Added menu item successfully";
   let image = null;
   if (req.file) {
     image = '/drinksPNGS/' + req.file.filename;
-    const query = 'INSERT INTO Drinks (name, description, price, type, image) VALUES (?, ?, ?, ?, ?)';
-    db.getCon().query(query, [name, description, price, drinkType, image], (error, result) => {
+    const query = 'INSERT INTO Drinks (name, description, price, type, image, url) VALUES (?, ?, ?, ?, ?, ?)';
+    db.getCon().query(query, [name, description, price, drinkType, image, url], (error, result) => {
       if (error) throw error;
       res.send(SUCCESS_MSG);
     });
   } else {
-    const query = 'INSERT INTO Drinks (name, description, price, type) VALUES (?, ?, ?, ?)'
+    const query = 'INSERT INTO Drinks (name, description, price, type, url) VALUES (?, ?, ?, ?, ?)'
 
-    db.getCon().query(query, [name, description, price, drinkType], (error, result) => {
+    db.getCon().query(query, [name, description, price, drinkType, url], (error, result) => {
       if (error) throw error;
       res.send(SUCCESS_MSG);
     });
@@ -130,7 +131,7 @@ app.put('/edit-drinks', upload.single('add-new-image'), (req, res) => {
   // console.log(req.body);
   // let newImgPath, query;
   const SUCCESS_MSG = "Item updated successfully";
-  const { id, name, price, description } = req.body;
+  const { id, name, price, description, url } = req.body;
 
   function isValidPrice(price) {
     return /^\d+(\.\d{1,2})?$/.test(price);
@@ -151,9 +152,9 @@ app.put('/edit-drinks', upload.single('add-new-image'), (req, res) => {
     });
   }
 
-  const query = 'UPDATE Drinks SET name = ?, price = ?, description = ?, type = ? WHERE id = ?';
+  const query = 'UPDATE Drinks SET name = ?, price = ?, description = ?, type = ?, url = ? WHERE id = ?';
 
-  db.getCon().query(query, [name, price, description, req.body.type, id], (error, result) => {
+  db.getCon().query(query, [name, price, description, req.body.type, url, id], (error, result) => {
     if (error) throw error;
     // console.log("Item updated successfully");
     res.send(SUCCESS_MSG);
@@ -223,10 +224,18 @@ app.post('/createAcount',verifyNewAcount.checkDuplicateEmail, async (req, res) =
 
       //res.send('User registered successfully');
     });
+
+    //add token for loging in 
+    //const accessToken = jwt.sign({  email: email ,role: role}, secretKey, { expiresIn: '1h' });
+    //res.cookie('token', accessToken, { httpOnly: true, secure: true, sameSite: 'strict' });
+    console.log("Match");
+    return res.send('User registered successfully');
   } catch (error) {
     console.error('Error during registration:', error);
     //res.status(500).send('Error during registration');
   }
+
+
 });
 
 function authenticateToken(req, res, next) {
@@ -267,7 +276,7 @@ app.get('/protected', authenticateToken, (req, res) => {
 
 app.get('/adminlogin', (req,res) =>{ //temporary page for admin login
 
-  res.render('adminLogin.ejs')
+  res.render('adminLogIn.ejs')
 });
 
 app.post('/adminLogin', async (req, res) => {
@@ -388,14 +397,11 @@ db.connectToDatabase(function (err) {
 });
 
 //test authorization
-//,function(req,res){verifyToken}
-app.post('/tokenTest',(req, res) => {
+//now used to vreify a used in check wether or not to enable signout
+app.post('/tokenTest',[authJwt.verifyToken],(req, res) => {
   res.json("testing authentiification")
 })
-/*app.get('/tokenTest',verifyToken,verifyToken,(req, res) => {
-  res.json("authoriztion worked")
-})*/
 
-app.get('/tokenTest',[authJwt.verifyToken,authJwt.verifyAdmin],(req, res) => {
+/**app.get('/tokenTest',[authJwt.verifyToken],(req, res) => {
   res.json("authoriztion worked")
-})
+})**/

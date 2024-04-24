@@ -117,3 +117,6 @@ Thumbs.db
 !.gitignore
 !.nvmrc
 !.phpcs.xml.dist
+
+# Local Netlify folder
+.netlify
