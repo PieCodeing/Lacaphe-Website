@@ -1,5 +1,5 @@
 // __tests__/verifyNewAccount.test.js
-const checkDuplicateEmail = require('../MIDDLEWARE/verifyNewAcount');
+const {checkDuplicateEmail} = require('../MIDDLEWARE/verifyNewAcount');
 const db = require('../DATABASE/database');
 
 jest.mock('../DATABASE/database');
@@ -23,6 +23,7 @@ describe('verifyNewAccount', () => {
       });
 
       // Act
+    
       await checkDuplicateEmail(req, res, next);
 
       // Assert
