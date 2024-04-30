@@ -207,6 +207,8 @@ function makeCard(item) {
     newCard.appendChild(nameElement);
     newCard.appendChild(priceElement);
 }
+
+//CHANGED THIS FOR TESTING
 const menuData = [
     {
         category: "Coffee",
