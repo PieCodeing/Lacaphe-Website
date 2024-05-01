@@ -78,6 +78,7 @@ body {
 .content-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); /* Adjust column width as needed */
+    height: 400px;
 }
 
 .content-section img {
@@ -97,7 +98,7 @@ body {
     padding-bottom: 0;
     text-align: center;
     color:#fff;
-    font-size: min(1.1vw, 15px);
+    font-size: min(1.1vw, 17.5px);
 }
 .content-section h2{
     font-family: 'Karma', sans-serif;

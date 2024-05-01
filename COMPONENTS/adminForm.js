@@ -1,5 +1,8 @@
 // const { createElement } = required('./COMPONENTS/elementCreator.js');
 
+let noPagesLeft = false;
+
+
 async function handleFormSubmit(event, form, endpoint, method = 'POST', postSend) {
     event.preventDefault();
     // const form = document.getElementById(formId);
@@ -20,6 +23,17 @@ async function handleFormSubmit(event, form, endpoint, method = 'POST', postSend
     } catch (error) {
         console.error("Fetch error:", error);
     }
+}
+
+
+function leftBtnClick() {
+    console.log("left clicked");
+    changePage(-1);
+}
+
+function rightBtnClick() {
+    console.log("right clicked");
+    changePage(1);
 }
 
 
@@ -268,19 +282,19 @@ class Item {
             fetch(`http://localhost:3000/delete/${this._menuItem.id}`, {
                 method: 'DELETE'
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("Failed to delete item");
-                }
-                return response.text();
-            })
-            .then(message => {
-                console.log(message);
-                drink.remove();
-            })
-            .catch(error => {
-                console.error("Error", error);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Failed to delete item");
+                    }
+                    return response.text();
+                })
+                .then(message => {
+                    console.log(message);
+                    drink.remove();
+                })
+                .catch(error => {
+                    console.error("Error", error);
+                });
         }
 
         drink.appendChild(collapsed);
@@ -351,6 +365,53 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }));
 });
 
-let items = fetchItems();
+function fetchReviews(page, pageSize) {
+    fetch(`/reviews?page=${page}&pageSize=${pageSize}`)
+        .then(response => response.json())
+        .then(reviews => {
+            console.log(reviews.length);
+            const reviewsElement = document.getElementById('reviews');
+            while (reviewsElement.firstChild) {
+                reviewsElement.removeChild(reviewsElement.firstChild);
+            }
+            reviews.forEach(review => {
+                // console.log(review.id);
+                // console.log(review.review_text);
+                let reviewDiv = document.createElement('div');
+                reviewDiv.id = 'review';
+                let idSide = document.createElement('div');
+                idSide.className = 'name-side';
+                let reviewSide = document.createElement('div');
+                reviewSide.className = 'review-side';
+                reviewDiv.append(idSide, reviewSide);
+                let idText = document.createElement('p');
+                let reviewText = document.createElement('p');
+                idText.textContent = review.id;
+                reviewText.textContent = review.review_text;
+                idSide.appendChild(idText);
+                reviewSide.appendChild(reviewText);
+                reviewsElement.appendChild(reviewDiv);
+            })
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}
 
+let currentPage = 1;
+function changePage(increment) {
+    // console.log(currentPage);
+    const reviewsElement = document.getElementById('reviews');
+    const BACK = increment < 0;
+    const FORWARD = increment > 0;
+    const nextPage = currentPage + increment;
+    if (nextPage > 0) {
+        if ((reviewsElement.firstChild == null) && (FORWARD)) {
+            currentPage--;
+        }
+        currentPage += increment;
+        fetchReviews(currentPage, 5);
+    }
+}
+fetchReviews(currentPage, 5);
+
+let items = fetchItems();
 

@@ -90,12 +90,24 @@ app.get('/get-latest', (req, res) => {
 });
 
 app.delete('/delete/:id', (req, res) => {
-  const { id } = req.params;
+  // const { id } = req.params;
+  const id = parseInt(req.params.id, 10);  // Parse the id to an integer
+  if (isNaN(id)) {
+    return res.status(400).json({ message: 'Invalid ID format' });
+  }
   const query = 'DELETE FROM Drinks WHERE id = ?';
 
   db.getCon().query(query, [id], (error, results) => {
-    if (error) throw error;
-    res.send("Item deleted successfully");
+    // if (error) throw error;
+    // res.send("Item deleted successfully");
+    if (error) {
+      console.error('Error deleting item:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+    res.status(200).json({ message: 'Item deleted successfully' });
   });
 });
 
@@ -123,7 +135,6 @@ app.post('/add-drink', upload.single('add-new-item-image'), (req, res) => {
     });
   }
 
-  console.log(name, description, price, drinkType, image);
 
 })
 
@@ -376,6 +387,8 @@ app.post('/submit-review', async (req, res) => {
   });
 });
 
+module.exports = app;
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
@@ -402,6 +415,26 @@ app.post('/tokenTest',[authJwt.verifyToken],(req, res) => {
   res.json("testing authentiification")
 })
 
-/**app.get('/tokenTest',[authJwt.verifyToken],(req, res) => {
+app.get('/tokenTest',[authJwt.verifyToken],(req, res) => {
   res.json("authoriztion worked")
-})**/
+})
+
+app.get('/reviews', (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
+  const offset = (page - 1) * pageSize;
+  const sql = "SELECT id, review_text FROM Reviews LIMIT ? OFFSET ?";
+  db.getCon().query(sql, [pageSize, offset], (error, results) => {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+app.get('/get-reviews', (req, res) => {
+  const sql = "SELECT * FROM Reviews";
+  db.getCon().query(sql, (error, results) => {
+    if (error) throw error;
+    res.json(results);
+  });
+
+})

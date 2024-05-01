@@ -11,7 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(216, 197, 161); 
+    background-color: rgb(216, 197, 161);
 }
 
 #menu-drinks {
@@ -19,7 +19,7 @@ body {
     width: auto;
     display: flex;
     flex-direction: column;
-    background-color: rgb(216, 197, 161); 
+    background-color: rgb(216, 197, 161);
 }
 
 .name-side {
@@ -45,6 +45,14 @@ body {
     align-items: flex-end;
 }
 
+.review-side {
+    height: auto;
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .drink {
     /* border: 5px solid black; */
     height: auto;
@@ -59,7 +67,8 @@ table {
     border-collapse: collapse;
 }
 
-td, th {
+td,
+th {
     text-align: center;
     vertical-align: middle;
     width: auto;
@@ -80,6 +89,12 @@ hr {
 
 }
 
+#review {
+    display: flex;
+    flex-direction: row;
+
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -88,6 +103,14 @@ form {
 
 label {
     margin-top: 10px;
+}
+
+#reviews {
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(216, 197, 161);
 }
 
 /* td {
@@ -156,4 +179,3 @@ form p {
     
 } 
  */
-
