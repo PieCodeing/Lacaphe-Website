@@ -11,9 +11,9 @@ describe('Drink management', () => {
 
     it('should add a new drink if not a duplicate', async () => {
         const newDrink = {
-            'add-new-item-name': 'Espresso',          // Change field names
+            'add-new-item-name': 'Espresso',          
             'add-new-item-description': 'Strong coffee',
-            'add-new-item-price': '2.50',             // Ensure this is a string if your server expects a string
+            'add-new-item-price': '2.50',             
             'add-new-item-type': 'Coffee',
             'add-new-item-url': 'https://www.google.com'
         };
@@ -30,9 +30,9 @@ describe('Drink management', () => {
 
     it('should handle database errors when adding a drink', async () => {
         const newDrink = {
-            'add-new-item-name': 'Espresso',          // Change field names
+            'add-new-item-name': 'Espresso',          
             'add-new-item-description': 'Strong coffee',
-            'add-new-item-price': '2.50',             // Ensure this is a string if your server expects a string
+            'add-new-item-price': '2.50',             
             'add-new-item-type': 'Coffee',
         };
 
